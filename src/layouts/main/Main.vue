@@ -71,10 +71,7 @@
 
                   <vs-dropdown-menu class="w-32">
                     <vs-dropdown-item>
-                      <div @click="$router.push('/pages/profile').catch(() => {})" class="flex items-center">
-                        <feather-icon icon="UserIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
-                        <span>Profile</span>
-                      </div>
+                      <create-warehouse></create-warehouse>
                     </vs-dropdown-item>
                     <vs-dropdown-item>
                       <div @click="$router.push('/apps/todo').catch(() => {})" class="flex items-center">
@@ -124,8 +121,11 @@ import TheFooter           from '@/layouts/components/TheFooter.vue'
 import themeConfig         from '@/../themeConfig.js'
 import VNavMenu            from '@/layouts/components/vertical-nav-menu/VerticalNavMenu.vue'
 
+import CreateWarehouse     from '@/views/pages/settings/warehouses/CreateWarehouse'
+
 export default {
   components: {
+    CreateWarehouse,
     BackToTop,
     HNavMenu,
     TheFooter,

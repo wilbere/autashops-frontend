@@ -36,7 +36,7 @@
               <div class="con-btns-user">
                 <div class="con-userx">
                   <vs-avatar size="45px" :src="tr.attendant.image.url"/>
-                  <span title="Attendant">
+                  <span>
                     {{ tr.attendant.name }}
                   </span>
                 </div>
@@ -58,6 +58,8 @@
         </vs-tr>
       </template>
     </vs-table>
+    <pre>{{warehouses}}
+    </pre>
   </div>
 </template>
 <script>

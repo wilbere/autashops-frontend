@@ -4,43 +4,69 @@
     <vs-popup classContent="popup-example"  title="Edit Warehouse" :active.sync="editWarehouse">
       <div class="vx-row mb-3">
         <div class="vx-col w-full">
-          <vs-select
-            label="Figuras"
-            v-model="select1"
-            >
-              <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in options1" />
-            </vs-select>
+          <v-select
+            v-validate="'required'"
+            data-vv-validate-on="blur"
+            data-vv-name="attendant"
+            v-model="attendant"
+            :options="attendants"  />
+        </div>
+      </div>
+      <div class="vx-row mb-5">
+        <div class="vx-col w-full">
+          <vs-input
+            v-validate="'required'"
+            data-vv-validate-on="blur"
+            data-vv-name="name"
+            class="w-full"
+            label-placeholder="Name"
+            v-model="warehouse.name" />
+            <span class="text-danger w-full text-sm">{{ errors.first('name') }}</span>
+
         </div>
       </div>
       <div class="vx-row mb-3">
         <div class="vx-col w-full">
-          <vs-input class="w-full" label-placeholder="Name" v-model="warehouse.name" />
+          <vs-input
+            v-validate="'required|email'"
+            data-vv-validate-on="blur"
+            data-vv-name="email"
+            class="w-full"
+            type="email"
+            label-placeholder="Email"
+            v-model="warehouse.email" />
+            <span class="text-danger w-full text-sm">{{ errors.first('email') }}</span>
+
         </div>
       </div>
       <div class="vx-row mb-3">
         <div class="vx-col w-full">
-          <vs-input class="w-full" type="email" label-placeholder="Email" v-model="warehouse.email" />
-        </div>
-      </div>
-      <div class="vx-row mb-3">
-        <div class="vx-col w-full">
-          <vs-input class="w-full" label-placeholder="Phone" v-model="warehouse.phone" />
+          <vs-input
+            v-validate="'required|numeric|min:3'"
+            data-vv-validate-on="blur"
+            data-vv-name="phone"
+            class="w-full"
+            label-placeholder="Phone"
+            v-model="warehouse.phone" />
+            <span class="text-danger w-full text-sm">{{ errors.first('phone') }}</span>
         </div>
       </div>
       <div class="vx-row mb-6">
         <div class="vx-col w-full">
-          <vs-input class="w-full" label-placeholder="Address" v-model="warehouse.address" />
-        </div>
-      </div>
-      <div class="vx-row mb-6">
-        <div class="vx-col w-full">
-          <vs-checkbox class="inline-flex" v-model="check5">Remember Me</vs-checkbox>
+          <vs-input
+            v-validate="'required'"
+            data-vv-validate-on="blur"
+            data-vv-name="address"
+            class="w-full"
+            label-placeholder="Address"
+            v-model="warehouse.address" />
+            <span class="text-danger w-full text-sm">{{ errors.first('address') }}</span>
+
         </div>
       </div>
       <div class="vx-row">
         <div class="vx-col w-full">
-          <vs-button class="mr-3 mb-2">Submit</vs-button>
-          <vs-button color="warning" type="border" class="mb-2" @click="input17 = input18 = input19 = input20 = ''; check5 = false;">Cancle</vs-button>
+          <vs-button class="mr-3 mb-2" @click="this.updateWarehouse" :disabled="!validateForm">Submit</vs-button>
         </div>
       </div>
 
@@ -50,22 +76,65 @@
 </template>
 
 <script>
+import axios from '../../../../axios.js'
+import vSelect from 'vue-select'
+
 export default {
+  components : {
+    vSelect
+  },
   props: {
     warehouse:{}
   },
+  computed: {
+    validateForm () {
+      return  this.errors.any() !== null && this.warehouse.name !== '' && this.warehouse.phone !== ''  && this.warehouse.email !== '' && this.warehouse.address !== ''
+    },
+  },
   data(){
     return {
-      select1:3,
-      options1:[
-        {text:'IT',value:0},
-        {text:'Blade Runner',value:2},
-        {text:'Thor Ragnarok',value:3},
-      ],
-      value1:'',
-      value2:'',
       editWarehouse:false,
-      popupActivo3:false
+      attendants : [],
+      attendant : {
+        label : this.warehouse.attendant.name,
+        value : this.warehouse.attendant.id,
+      },
+    }
+  },
+  created() {
+    this.getUsers()
+  },
+  methods: {
+    updateWarehouse() {
+      this.warehouse.attendant = this.attendant.value
+      axios.put('/warehouses/'+this.warehouse.id, this.warehouse)
+        .then(res => {
+          if (res.data.res === true) {
+            this.$vs.notify({
+              title: 'Update Success',
+              text: 'You are successfully updated!',
+              iconPack: 'feather',
+              icon: 'icon-check',
+              color: 'success'
+            })
+            this.editWarehouse = false
+            location.reload()
+          } else {
+            this.$vs.notify({
+              title: 'Error',
+              text: res.data.error,
+              iconPack: 'feather',
+              icon: 'icon-check',
+              color: 'danger'
+            })
+          }
+        })
+    },
+    getUsers() {
+      axios.get('/warehouses/attendants')
+        .then(res => {
+          this.attendants = res.data.attendants
+        })
     }
   }
 }

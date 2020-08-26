@@ -5,7 +5,7 @@
       <vs-row vs-align="center" vs-type="flex" vs-justify="space-around" vs-w="12">
         <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="6">
           <vs-avatar size="45px" :src="warehouse.attendant.image.url"/>
-          <span title="Attendant">
+          <span title="'Attendant'">
             {{ warehouse.attendant.name }}
           </span>
           <vs-button color="success" type="line" icon="edit"></vs-button>
