@@ -52,8 +52,8 @@
                       <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
                       <router-link to="">Forgot Password?</router-link>
                   </div>
-                  <vs-button  type="border">Register</vs-button>
-                  <vs-button class="float-right">Login</vs-button>
+                  <vs-button  type="border" to="/admin/register">Register</vs-button>
+                  <vs-button class="float-right" @click="login" :disabled="!validateForm">Login</vs-button>
 
                 </div>
 
@@ -74,6 +74,51 @@ export default{
       password: "",
       checkbox_remember_me: false,
     }
+  },
+  computed: {
+    validateForm () {
+      return !this.errors.any() && this.email !== '' && this.password !== ''
+    }
+  },
+  created() {
+    this.checkLogin()
+  },
+  methods: {
+    checkLogin () {
+      // If user is already logged in notify
+      if (this.$store.state.auth.isLogin) {
+
+        // Close animation if passed as payload
+        // this.$vs.loading.close()
+
+        this.$vs.notify({
+          title: 'Login Attempt',
+          text: 'You are already logged in!',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle',
+          color: 'warning'
+        })
+
+        this.$router.push('/admin/')
+        return false
+      }
+      return true
+    },
+    login () {
+      // Loading
+      this.$vs.loading()
+
+      const payload = {
+        checkbox_remember_me: this.checkbox_remember_me,
+        userDetails: {
+          email: this.email,
+          password: this.password
+        },
+        notify: this.$vs.notify,
+        closeAnimation: this.$vs.loading.close
+      }
+      this.$store.dispatch('auth/loginAttempt', payload)
+    },
   }
 }
 </script>

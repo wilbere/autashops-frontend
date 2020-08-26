@@ -10,15 +10,42 @@
 
 export default [
   {
-    url: "/",
-    name: "Home",
-    slug: "home",
-    icon: "HomeIcon",
+    url: "/admin/dashboard",
+    name: "Dashboard",
+    slug: "Dashboard",
+    icon: "BarChart2Icon",
   },
   {
-    url: "/page2",
-    name: "Page 2",
-    slug: "page2",
+    url: "/admin/settings",
+    name: "Settings",
+    slug: "settings",
     icon: "FileIcon",
+    submenu: [
+      {
+        url: '/admin/settings/warehouses',
+        name: 'Warehouses',
+        slug: 'warehouses'
+      },
+      {
+        url: '/admin/settings/units',
+        name: 'Units',
+        slug: 'units'
+      },
+      {
+        url: '/admin/settings/taxes',
+        name: 'Tax',
+        slug: 'taxes'
+      },
+      {
+        url: '/admin/settings/categories',
+        name: 'Categories',
+        slug: 'categories'
+      },
+      {
+        url: '/admin/settings/currencies',
+        name: 'Currencies',
+        slug: 'currencies'
+      },
+    ]
   },
 ]

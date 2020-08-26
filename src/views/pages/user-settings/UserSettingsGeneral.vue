@@ -3,7 +3,7 @@
 
     <!-- Img Row -->
     <div class="flex flex-wrap items-center mb-base">
-      <vs-avatar :src="activeUserInfo.photoURL" size="70px" class="mr-4 mb-4" />
+      <vs-avatar :src="currentUser.image.url" size="70px" class="mr-4 mb-4" />
       <div>
         <vs-button class="mr-4 sm:mb-0 mb-2">Upload photo</vs-button>
         <vs-button type="border" color="danger">Remove</vs-button>
@@ -16,11 +16,9 @@
     <vs-input class="w-full mb-base" label-placeholder="Name" v-model="name"></vs-input>
     <vs-input class="w-full" label-placeholder="Email" v-model="email"></vs-input>
 
-    <vs-alert icon-pack="feather" icon="icon-info" class="h-full my-4" color="warning">
+    <!-- <vs-alert icon-pack="feather" icon="icon-info" class="h-full my-4" color="warning">
       <span>Your account is not verified. <a href="#" class="hover:underline">Resend Confirmation</a></span>
-    </vs-alert>
-
-    <vs-input class="w-full my-base" label-placeholder="Company" v-model="company"></vs-input>
+    </vs-alert> -->
 
     <!-- Save & Reset Button -->
     <div class="flex flex-wrap items-center justify-end">
@@ -31,18 +29,20 @@
 </template>
 
 <script>
+
 export default {
   data () {
     return {
-      username: 'johny_01',
-      name: this.$store.state.AppActiveUser.displayName,
-      email: 'john@admin.com',
-      company: 'SnowMash Technologies Pvt Ltd'
+      username : '',
+      email : '',
+      name: '',
+
+
     }
   },
   computed: {
-    activeUserInfo () {
-      return this.$store.state.AppActiveUser
+    currentUser() {
+      return this.$store.state.auth.currentUser
     }
   }
 }

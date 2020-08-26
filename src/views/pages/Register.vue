@@ -24,20 +24,30 @@
               <div class="p-8 login-tabs-container">
 
                 <div class="vx-card__title mb-4">
-                  <h4 class="mb-4">Login</h4>
+                  <h4 class="mb-4">Register</h4>
                   <p>Welcome back, please login to your account.</p>
                 </div>
 
                 <div>
                   <vs-input
-                    v-validate="'required|alpha_dash|min:3'"
+                    v-validate="'required|alpha_spaces|min:3'"
                     data-vv-validate-on="blur"
                     label-placeholder="Name"
                     name="name"
                     placeholder="Name"
                     v-model="name"
                     class="w-full" />
-                  <!-- <span class="text-danger text-sm">{{ errors.first('name') }}</span> -->
+                  <span class="text-danger text-sm">{{ errors.first('name') }}</span>
+
+                  <vs-input
+                    v-validate="'required|alpha_dash|min:3'"
+                    data-vv-validate-on="blur"
+                    label-placeholder="Username"
+                    name="username"
+                    placeholder="Username"
+                    v-model="username"
+                    class="w-full" />
+                  <span class="text-danger text-sm">{{ errors.first('username') }}</span>
 
                   <vs-input
                     v-validate="'required|email'"
@@ -48,7 +58,7 @@
                     placeholder="Email"
                     v-model="email"
                     class="w-full mt-6" />
-                  <!-- <span class="text-danger text-sm">{{ errors.first('email') }}</span> -->
+                  <span class="text-danger text-sm">{{ errors.first('email') }}</span>
 
                   <vs-input
                     ref="password"
@@ -60,7 +70,7 @@
                     placeholder="Password"
                     v-model="password"
                     class="w-full mt-6" />
-                  <!-- <span class="text-danger text-sm">{{ errors.first('password') }}</span> -->
+                  <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
                   <vs-input
                     type="password"
@@ -72,10 +82,10 @@
                     placeholder="Confirm Password"
                     v-model="confirm_password"
                     class="w-full mt-6" />
-                  <!-- <span class="text-danger text-sm">{{ errors.first('confirm_password') }}</span> -->
+                  <span class="text-danger text-sm">{{ errors.first('confirm_password') }}</span>
 
                   <vs-checkbox v-model="isTermsConditionAccepted" class="mt-6">I accept the terms & conditions.</vs-checkbox>
-                  <vs-button  type="border" to="/pages/login" class="mt-6">Login</vs-button>
+                  <vs-button  type="border" to="/admin/login" class="mt-6">Login</vs-button>
                   <vs-button class="float-right mt-6" @click="registerUser" :disabled="!validateForm">Register</vs-button>
 
                 </div>
@@ -90,25 +100,38 @@
 </template>
 
 <script>
+
+import {mapGetters} from "vuex";
+import route from '../../router.js'
+
 export default{
   data () {
     return {
       name: '',
+      username: '',
       email: '',
       password: '',
       confirm_password: '',
-      isTermsConditionAccepted: true,
+      isTermsConditionAccepted: true
     }
   },
   computed: {
     validateForm () {
-      return  this.name !== '' && this.email !== '' && this.password !== '' && this.confirm_password !== '' && this.isTermsConditionAccepted === true
-    }
+      return  this.errors.any() !== null && this.name !== '' && this.username !== ''  && this.email !== '' && this.password !== '' && this.confirm_password !== ''&& this.confirm_password == this.password && this.isTermsConditionAccepted === true
+    },
+    ...mapGetters(["currentUser", "errors", "isLogin"]),
+    // checkLogin() {
+    //   return this.errors
+    // }
   },
+  created () {
+    this.checkLogin()
+  },
+
   methods: {
     checkLogin () {
       // If user is already logged in notify
-      if (this.$store.state.auth.isUserLoggedIn()) {
+      if (this.$store.state.auth.isLogin) {
 
         // Close animation if passed as payload
         // this.$vs.loading.close()
@@ -121,25 +144,36 @@ export default{
           color: 'warning'
         })
 
+        this.$router.push('/admin/')
         return false
       }
       return true
     },
     registerUser () {
-      // If form is not validated or user is already login return
-      if (!this.validateForm || !this.checkLogin()) return
 
-      const payload = {
-        userDetails: {
-          displayName: this.displayName,
-          email: this.email,
-          password: this.password,
-          confirmPassword: this.confirm_password
-        },
-        notify: this.$vs.notify
-      }
-      this.$store.dispatch('auth/registerUser', payload)
-    }
+      this.$vs.loading()
+      // If form is not validated or user is already login return
+      this.$validator.validate()
+        .then(() => {
+          if (!this.validateForm) return
+
+          const payload = {
+            userDetails: {
+              name: this.name,
+              username: this.username,
+              email: this.email,
+              password: this.password,
+              confirm_password: this.confirm_password
+            },
+            notify: this.$vs.notify,
+            closeAnimation: this.$vs.loading.close
+          }
+
+          this.$store.dispatch('auth/registerUser', payload)
+
+        })
+    },
+
   }
 }
 </script>

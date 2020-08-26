@@ -76,7 +76,7 @@ export default {
   methods: {
     checkLogin () {
       // If user is already logged in notify
-      if (this.$store.state.auth.isUserLoggedIn()) {
+      if (this.$store.state.auth.isLogin()) {
 
         // Close animation if passed as payload
         // this.$vs.loading.close()

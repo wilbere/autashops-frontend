@@ -91,7 +91,7 @@ export default {
   },
   computed: {
     activeUserInfo () {
-      return this.$store.state.AppActiveUser
+      return this.$store.state.auth.currentUser
     }
   }
 }
