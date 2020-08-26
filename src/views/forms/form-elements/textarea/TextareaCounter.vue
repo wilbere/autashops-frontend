@@ -3,8 +3,8 @@
     Description: Add counter to show validation to textarea
     ----------------------------------------------------------------------------------------
     Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
+      Author: Wilber Galindez
+    Author URL: https://www.wilber.dev/
 ========================================================================================== -->
 
 

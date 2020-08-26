@@ -3,8 +3,8 @@
     Description: Option 1 - Option Grouping
     ----------------------------------------------------------------------------------------
     Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
+      Author: Wilber Galindez
+    Author URL: https://www.wilber.dev/
 ========================================================================================== -->
 
 

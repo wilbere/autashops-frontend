@@ -2,9 +2,9 @@
   File Name: router.js
   Description: Routes for vue-router. Lazy loading is enabled.
   ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
+  Item Name: Autashops - POS, Inventory and eCommerce System
+  Author: Wilber Galindez
+  Author URL: https://www.wilber.dev/
 ==========================================================================================*/
 
 
@@ -110,6 +110,19 @@ const router = new Router({
                     { title: 'Taxes', active: true}
                   ],
                   pageTitle: 'Taxes'
+                }
+              },
+              {
+                path: '/admin/settings/brands',
+                name: 'Brands',
+                component: () => import('./views/pages/settings/brands/Brands.vue'),
+                meta: {
+                  rule: 'admin',
+                  breadcrumb: [
+                    { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Brands', active: true}
+                  ],
+                  pageTitle: 'Brands'
                 }
               },
             ],

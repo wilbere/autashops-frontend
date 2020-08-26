@@ -1,22 +1,22 @@
 import mock from '@/fake-db/mock.js'
 
 const data = {
-  pixinvent_product_1: {
+  Wilber Galindez_product_1: {
     img: require('@/assets/images/pages/content-img-1.jpg'),
     title: 'Vuexy Admin',
-    subtitle: 'By Pixinvent Creative Studio',
+    subtitle: 'By Wilber Galindez Creative Studio',
     subtitle_2: 'Elite Author'
   },
-  pixinvent_product_sales_1: {
+  Wilber Galindez_product_sales_1: {
     img: require('@/assets/images/pages/content-img-2.jpg'),
     title: 'Vuexy Admin',
-    subtitle: 'By Pixinvent Creative Studio',
+    subtitle: 'By Wilber Galindez Creative Studio',
     footer_text_left_value: '$ 4785.78',
     footer_text_left_label: 'Income',
     footer_text_right_value: '12 June 2019',
     footer_text_right_label: 'Release Date'
   },
-  pixinvent_product_goal_1: {
+  Wilber Galindez_product_goal_1: {
     img: require('@/assets/images/pages/content-img-3.jpg'),
     title: 'Vuexy Admin',
     progress_done_per: 75,
@@ -118,7 +118,7 @@ const data = {
   ],
   item_reviews_12: {
     title: 'Vuexy Admin',
-    subtitle: 'by Pixinvent Creative Studio',
+    subtitle: 'by Wilber Galindez Creative Studio',
     img: require('@/assets/images/pages/content-img-4.jpg'),
     meta: {
       likes: 368,
@@ -143,16 +143,16 @@ const data = {
   }
 }
 
-mock.onGet('/api/users/pixinvent/product/1').reply(() => {
-  return [200, data.pixinvent_product_1]
+mock.onGet('/api/users/Wilber Galindez/product/1').reply(() => {
+  return [200, data.Wilber Galindez_product_1]
 })
 
-mock.onGet('/api/users/pixinvent/product/sales/1').reply(() => {
-  return [200, data.pixinvent_product_sales_1]
+mock.onGet('/api/users/Wilber Galindez/product/sales/1').reply(() => {
+  return [200, data.Wilber Galindez_product_sales_1]
 })
 
-mock.onGet('/api/users/pixinvent/product/goals/1').reply(() => {
-  return [200, data.pixinvent_product_goal_1]
+mock.onGet('/api/users/Wilber Galindez/product/goals/1').reply(() => {
+  return [200, data.Wilber Galindez_product_goal_1]
 })
 
 mock.onGet('/api/users/89').reply(() => {

@@ -3,8 +3,8 @@
     Description: Basic Cards
     ----------------------------------------------------------------------------------------
     Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
+      Author: Wilber Galindez
+    Author URL: https://www.wilber.dev/
 ========================================================================================== -->
 
 <template>
@@ -441,17 +441,17 @@ export default{
   },
   created () {
     // Card 1
-    this.$http.get('/api/users/pixinvent/product/1')
+    this.$http.get('/api/users/Wilber Galindez/product/1')
       .then((response) => { this.card_1 = response.data })
       .catch((error)   => { console.log(error) })
 
       // Card 2
-    this.$http.get('/api/users/pixinvent/product/sales/1')
+    this.$http.get('/api/users/Wilber Galindez/product/sales/1')
       .then((response) => { this.card_2 = response.data })
       .catch((error)   => { console.log(error) })
 
       // Card 3
-    this.$http.get('/api/users/pixinvent/product/goals/1')
+    this.$http.get('/api/users/Wilber Galindez/product/goals/1')
       .then((response) => { this.card_3 = response.data })
       .catch((error)   => { console.log(error) })
 

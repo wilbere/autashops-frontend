@@ -12,7 +12,7 @@
     <div class="flex flex-wrap justify-between items-center mb-base">
       <div>
         <p>Account is connected with facebook.</p>
-        <p class="font-medium mb-4">@pixinvents</p>
+        <p class="font-medium mb-4">@Wilber Galindezs</p>
       </div>
       <vs-button type="border" color="danger">Disconnect</vs-button>
     </div>

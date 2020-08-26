@@ -3,7 +3,7 @@
   Description: Theme configuration
   ----------------------------------------------------------------------------------------
   Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
+  Author: Wilber Galindez
   Author URL: hhttp://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 

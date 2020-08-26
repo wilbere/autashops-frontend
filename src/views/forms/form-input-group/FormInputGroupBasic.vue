@@ -33,7 +33,7 @@
     <vx-input-group class="mb-base">
       <template slot="prepend">
         <div class="prepend-text bg-primary">
-          <span>https://pixinvent.com/users/</span>
+          <span>https://Wilber Galindez.com/users/</span>
         </div>
       </template>
 
@@ -101,7 +101,7 @@
   &lt;vx-input-group class=&quot;mb-base&quot;&gt;
     &lt;template slot=&quot;prepend&quot;&gt;
       &lt;div class=&quot;prepend-text bg-primary&quot;&gt;
-        &lt;span&gt;https://pixinvent.com/users/&lt;/span&gt;
+        &lt;span&gt;https://Wilber Galindez.com/users/&lt;/span&gt;
       &lt;/div&gt;
     &lt;/template&gt;
 

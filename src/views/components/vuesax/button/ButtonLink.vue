@@ -3,8 +3,8 @@
     Description: Button with link
     ----------------------------------------------------------------------------------------
     Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
+      Author: Wilber Galindez
+    Author URL: https://www.wilber.dev/
 ========================================================================================== -->
 
 
@@ -19,16 +19,16 @@
 
         <div class="demo-alignment">
 
-            <vs-button color="primary" type="filled" href="https://pixinvent.com/">String literal</vs-button>
-            <vs-button color="primary" type="filled" :href="{url: 'https://pixinvent.com/'}">Object Path</vs-button>
-            <vs-button color="primary" type="filled" target href="https://pixinvent.com/">Open New Tab</vs-button>
+            <vs-button color="primary" type="filled" href="https://Wilber Galindez.com/">String literal</vs-button>
+            <vs-button color="primary" type="filled" :href="{url: 'https://Wilber Galindez.com/'}">Object Path</vs-button>
+            <vs-button color="primary" type="filled" target href="https://Wilber Galindez.com/">Open New Tab</vs-button>
 
         </div>
 
         <template slot="codeContainer">
-&lt;vs-button color=&quot;primary&quot; type=&quot;filled&quot; href=&quot;https://pixinvent.com/&quot;&gt;String literal&lt;/vs-button&gt;
-&lt;vs-button color=&quot;primary&quot; type=&quot;filled&quot; :href=&quot;{url: 'https://pixinvent.com/'}&quot;&gt;Object Path&lt;/vs-button&gt;
-&lt;vs-button color=&quot;primary&quot; type=&quot;filled&quot; target href=&quot;https://pixinvent.com/&quot;&gt;Open New Tab&lt;/vs-button&gt;
+&lt;vs-button color=&quot;primary&quot; type=&quot;filled&quot; href=&quot;https://Wilber Galindez.com/&quot;&gt;String literal&lt;/vs-button&gt;
+&lt;vs-button color=&quot;primary&quot; type=&quot;filled&quot; :href=&quot;{url: 'https://Wilber Galindez.com/'}&quot;&gt;Object Path&lt;/vs-button&gt;
+&lt;vs-button color=&quot;primary&quot; type=&quot;filled&quot; target href=&quot;https://Wilber Galindez.com/&quot;&gt;Open New Tab&lt;/vs-button&gt;
         </template>
 
     </vx-card>

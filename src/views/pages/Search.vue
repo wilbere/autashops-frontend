@@ -3,8 +3,8 @@
     Description: Search Page
     ----------------------------------------------------------------------------------------
     Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
+      Author: Wilber Galindez
+    Author URL: https://www.wilber.dev/
 ========================================================================================== -->
 
 
@@ -217,7 +217,7 @@ export default{
         {
           title: 'Modern Admin - Clean Bootstrap 4 Dashboard HTML Template',
           linkUrl: 'https://1.envato.market/modern_admin',
-          resultUrl: 'https://1.envato.market/pixinvent_portfolio',
+          resultUrl: 'https://1.envato.market/Wilber Galindez_portfolio',
           metaData: {
             ratings: 5,
             info: ['25 reviews', '25.00 USD', 'In Stock']
@@ -260,7 +260,7 @@ export default{
         {
           title: 'Attire bench - Quick win shoot me an email',
           linkUrl: 'https://1.envato.market/modern_admin',
-          resultUrl: 'https://1.envato.market/pixinvent_portfolio',
+          resultUrl: 'https://1.envato.market/Wilber Galindez_portfolio',
           resultImg: require('@/assets/images/pages/search-result.jpg'),
           metaData: {
             ratings: 4.5,
@@ -272,7 +272,7 @@ export default{
         {
           title: 'The Table - for what do you feel you would',
           linkUrl: 'https://1.envato.market/modern_admin',
-          resultUrl: 'https://1.envato.market/pixinvent_portfolio',
+          resultUrl: 'https://1.envato.market/Wilber Galindez_portfolio',
           resultVideo: [{sources: [{ type: 'video/mp4', src: 'http://vjs.zencdn.net/v/oceans.mp4' }], poster: 'https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg'}],
           metaData: {
             info: ['1M Views', 'Uploaded by PlayStation']
@@ -283,20 +283,20 @@ export default{
         {
           title: 'Microdosing - deep v actually schlitz chia',
           linkUrl: 'https://1.envato.market/modern_admin',
-          resultUrl: 'https://1.envato.market/pixinvent_portfolio',
+          resultUrl: 'https://1.envato.market/Wilber Galindez_portfolio',
           description: 'Wafer liquorice sweet roll jelly beans cake soufflé. Oat cake marzipan chocolate cake sesame snaps jujubes. Dragée biscuit dessert. Chocolate muffin wafer. Sugar plum icing tootsie roll gummi bears marzipan candy canes biscuit.'
         },
         {
           title: 'Aesthetic neutra freegan, mlkshk literally',
           linkUrl: 'https://1.envato.market/modern_admin',
-          resultUrl: 'https://1.envato.market/pixinvent_portfolio',
+          resultUrl: 'https://1.envato.market/Wilber Galindez_portfolio',
           time: 'Mon Jun 30 2017 10:30:00 GMT+0000 (GMT)',
           description: 'Donut jelly cake chupa chups powder chocolate cake cheesecake. Wafer macaroon sweet roll gingerbread cheesecake gummi bears. Marzipan jujubes sweet roll tootsie roll cookie apple pie brownie bear claw jelly beans.'
         },
         {
           title: 'iCell - disrupt butcher pitchfork.',
           linkUrl: 'https://1.envato.market/modern_admin#',
-          resultUrl: 'https://1.envato.market/pixinvent_portfolio',
+          resultUrl: 'https://1.envato.market/Wilber Galindez_portfolio',
           time: 'Mon DEC 12 2015 08:39:00 GMT+0000 (GMT)',
           description: 'Cake fruitcake cake caramels jelly beans chocolate bar. Macaroon gingerbread pastry. Gummies ice cream chocolate lollipop brownie cotton candy. Topping cotton candy brownie. Cake tiramisu macaroon sugar plum. Sweet cotton candy powder tootsie roll candy gummies brownie lollipop. Sweet muffin pudding.'
         }

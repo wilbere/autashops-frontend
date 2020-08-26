@@ -2,9 +2,9 @@
     File Name: Main.vue
     Description: Main layout
     ----------------------------------------------------------------------------------------
-    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
+    Item Name: Autashops - POS, Inventory and eCommerce System
+    Author: Wilber Galindez
+    Author URL: https://www.wilber.dev/
 ========================================================================================== -->
 
 
@@ -69,20 +69,41 @@
                 <vs-dropdown vs-trigger-click class="ml-auto md:block hidden cursor-pointer">
                   <vs-button radius icon="icon-plus" icon-pack="feather" />
 
-                  <vs-dropdown-menu class="w-32">
+                  <vs-dropdown-menu class="w-42">
                     <vs-dropdown-item>
-                      <create-warehouse></create-warehouse>
-                    </vs-dropdown-item>
-                    <vs-dropdown-item>
-                      <div @click="$router.push('/apps/todo').catch(() => {})" class="flex items-center">
-                        <feather-icon icon="CheckSquareIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
-                        <span>Tasks</span>
+                      <div  class="flex  pt-1 items-center">
+                        <feather-icon icon="TagIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                        <span>Brands</span>
                       </div>
                     </vs-dropdown-item>
                     <vs-dropdown-item>
-                      <div @click="$router.push('/apps/email').catch(() => {})" class="flex items-center">
-                        <feather-icon icon="MailIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
-                        <span>Inbox</span>
+                      <div  class="flex items-center">
+                        <feather-icon icon="AtSignIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                        <span>Categories</span>
+                      </div>
+                    </vs-dropdown-item>
+                    <vs-dropdown-item>
+                      <div  class="flex items-center">
+                        <feather-icon icon="DollarSignIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                        <span>Currencies</span>
+                      </div>
+                    </vs-dropdown-item>
+                    <vs-dropdown-item>
+                      <div  class="flex items-center">
+                        <feather-icon icon="PercentIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                        <span>Tax</span>
+                      </div>
+                    </vs-dropdown-item>
+                    <vs-dropdown-item>
+                      <div  class="flex items-center">
+                        <feather-icon icon="StarIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                        <span>Units</span>
+                      </div>
+                    </vs-dropdown-item>
+                    <vs-dropdown-item>
+                      <div  class="flex items-center">
+                        <feather-icon icon="PackageIcon" class="inline-block mr-2" svgClasses="w-4 h-4" />
+                        <span>Warehouse</span>
                       </div>
                     </vs-dropdown-item>
                   </vs-dropdown-menu>

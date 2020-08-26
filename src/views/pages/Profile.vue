@@ -3,8 +3,8 @@
   Description: Profile Page
   ----------------------------------------------------------------------------------------
   Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
+    Author: Wilber Galindez
+  Author URL: https://www.wilber.dev/
 ========================================================================================== -->
 
 
@@ -84,7 +84,7 @@
 
                     <div class="mt-5">
                         <h6>Website:</h6>
-                        <p>www.pixinvent.com</p>
+                        <p>www.Wilber Galindez.com</p>
                     </div>
 
                     <div class="social-links flex mt-4">

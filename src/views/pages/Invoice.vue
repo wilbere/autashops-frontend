@@ -3,8 +3,8 @@
     Description: Invoice Page
     ----------------------------------------------------------------------------------------
     Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
+      Author: Wilber Galindez
+    Author URL: https://www.wilber.dev/
 ========================================================================================== -->
 
 
@@ -147,7 +147,7 @@ export default{
         addressLine1: '9 N. Sherwood Court',
         addressLine2: 'Elyria, OH',
         zipcode: '94203',
-        mailId: 'hello@pixinvent.net',
+        mailId: 'hello@Wilber Galindez.net',
         mobile: '+91 999 999 9999'
       },
       recipientDetails: {
