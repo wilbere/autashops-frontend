@@ -35,6 +35,7 @@
         multiple
         max-items="10"
         pagination
+        search
         v-model="selected"
         :data="warehouse.products">
 

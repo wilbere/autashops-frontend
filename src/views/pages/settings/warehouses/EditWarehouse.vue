@@ -21,7 +21,7 @@
             class="w-full"
             label-placeholder="Name"
             v-model="warehouse.name" />
-            <span class="text-danger w-full text-sm">{{ errors.first('name') }}</span>
+            <span class="text-danger w-full ml-3 text-sm">{{ errors.first('name') }}</span>
 
         </div>
       </div>
@@ -35,7 +35,7 @@
             type="email"
             label-placeholder="Email"
             v-model="warehouse.email" />
-            <span class="text-danger w-full text-sm">{{ errors.first('email') }}</span>
+            <span class="text-danger w-full ml-3 text-sm">{{ errors.first('email') }}</span>
 
         </div>
       </div>
@@ -48,7 +48,7 @@
             class="w-full"
             label-placeholder="Phone"
             v-model="warehouse.phone" />
-            <span class="text-danger w-full text-sm">{{ errors.first('phone') }}</span>
+            <span class="text-danger w-full ml-3 text-sm">{{ errors.first('phone') }}</span>
         </div>
       </div>
       <div class="vx-row mb-6">
@@ -60,10 +60,11 @@
             class="w-full"
             label-placeholder="Address"
             v-model="warehouse.address" />
-            <span class="text-danger w-full text-sm">{{ errors.first('address') }}</span>
+            <span class="text-danger w-full ml-3  text-sm">{{ errors.first('address') }}</span>
 
         </div>
       </div>
+      
       <div class="vx-row">
         <div class="vx-col w-full">
           <vs-button class="mr-3 mb-2" @click="this.updateWarehouse" :disabled="!validateForm">Submit</vs-button>
@@ -118,7 +119,7 @@ export default {
               color: 'success'
             })
             this.editWarehouse = false
-            location.reload()
+            this.$emit('success')
           } else {
             this.$vs.notify({
               title: 'Error',

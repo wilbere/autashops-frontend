@@ -8,7 +8,20 @@
 ========================================================================================== -->
 
 <template>
-    <vx-card class="overflow-hidden">
+    <vx-card class="overflow-hidden" actionable>
+      <template slot="actions">
+        <vs-dropdown vs-trigger-click class="cursor-pointer" >
+          <small class="flex cursor-pointer">
+            <feather-icon icon='ChevronDownIcon' svgClasses='h-4 w-4' class='ml-1' />
+          </small>
+          <vs-dropdown-menu class="w-52">
+              <vs-dropdown-item @click="edit">Edit</vs-dropdown-item>
+              <vs-dropdown-item @click="setDefault">Select Default</vs-dropdown-item>
+              <vs-dropdown-item @click="deleted">Delete</vs-dropdown-item>
+          </vs-dropdown-menu>
+        </vs-dropdown>
+      </template>
+
         <div slot="no-body">
             <div class="p-6" :class="{
               'flex justify-between flex-row-reverse items-center': iconRight,
@@ -91,6 +104,15 @@ export default{
         }
     },
     methods: {
+        setDefault(){
+          this.$emit('set-default')
+        },
+        deleted(){
+          this.$emit('deleted')
+        },
+        edit(){
+          this.$emit('edit')
+        },
         getHex(color) {
             if(_color.isColor(color)) {
               let rgb  = window.getComputedStyle(document.documentElement).getPropertyValue(`--vs-${color}`);

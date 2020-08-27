@@ -55,6 +55,7 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Settings' },
                     { title: 'Warehouses', active: true}
                   ],
                   pageTitle: 'Warehouses'
@@ -68,6 +69,7 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Settings' },
                     { title: 'Units', active: true}
                   ],
                   pageTitle: 'Units'
@@ -81,6 +83,7 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Settings' },
                     { title: 'Currencies', active: true}
                   ],
                   pageTitle: 'Currencies'
@@ -94,6 +97,7 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Settings' },
                     { title: 'Categories', active: true}
                   ],
                   pageTitle: 'Categories'
@@ -107,6 +111,7 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Settings' },
                     { title: 'Taxes', active: true}
                   ],
                   pageTitle: 'Taxes'
@@ -120,6 +125,7 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Settings' },
                     { title: 'Brands', active: true}
                   ],
                   pageTitle: 'Brands'
