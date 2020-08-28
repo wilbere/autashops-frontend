@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="centerx">
-    <vs-button color="success" vs-type="border" @click="editWarehouse=true" size="small" icon="edit"></vs-button>
-    <vs-popup classContent="popup-example"  title="Edit Warehouse" :active.sync="editWarehouse">
-      <div class="vx-row mb-3">
+    <vs-popup  classContent="popup-example"  :title="titleModal" :active.sync="isModalActiveLocal">
+
+      <div class="vx-row mb-5">
         <div class="vx-col w-full">
           <v-select
             v-validate="'required'"
@@ -64,10 +64,10 @@
 
         </div>
       </div>
-      
+
       <div class="vx-row">
         <div class="vx-col w-full">
-          <vs-button class="mr-3 mb-2" @click="this.updateWarehouse" :disabled="!validateForm">Submit</vs-button>
+          <vs-button class="ml-3 mb-2"  :disabled="!validateForm" @click="submitData">Submit</vs-button>
         </div>
       </div>
 
@@ -85,30 +85,119 @@ export default {
     vSelect
   },
   props: {
-    warehouse:{}
+    warehouse:{},
+    isModalActive: {
+      type: Boolean,
+      required: true
+    }
   },
   computed: {
     validateForm () {
-      return  this.errors.any() !== null && this.warehouse.name !== '' && this.warehouse.phone !== ''  && this.warehouse.email !== '' && this.warehouse.address !== ''
+      return  this.errors.any() !== null && this.warehouse.name !== '' && this.warehouse.phone !== '' && this.warehouse.email !== '' && this.warehouse.address !== ''
+    },
+    titleModal(){
+      return this.warehouse.id ? 'Edit warehouse' : 'New warehouse'
+    },
+    isModalActiveLocal: {
+      get () {
+        return this.isModalActive
+      },
+      set (val) {
+        if (!val) {
+          this.$emit('closeModal')
+          this.$validator.reset()
+          this.initValues()
+        }
+      }
     },
   },
   data(){
     return {
-      editWarehouse:false,
+      name: '',
+      phone: '',
+      emal: '',
+      address: '',
       attendants : [],
       attendant : {
-        label : this.warehouse.attendant.name,
-        value : this.warehouse.attendant.id,
+        label : '',
+        value : '',
       },
     }
   },
   created() {
     this.getUsers()
   },
+  watch: {
+    isSidebarActive (val) {
+      if (!val) return
+      if (Object.entries(this.data).length === 0) {
+        this.$validator.reset()
+      } else {
+        this.id = this.warehouse.id
+        this.name = this.warehouse.name
+        this.phone = this.warehouse.phone
+        this.email = this.warehouse.email
+        this.address = this.warehouse.address
+      }
+    }
+  },
   methods: {
-    updateWarehouse() {
-      this.warehouse.attendant = this.attendant.value
-      axios.put('/warehouses/'+this.warehouse.id, this.warehouse)
+    initValues () {
+      if (this.warehouse.id) return
+      this.id = null
+      this.name = ''
+      this.phone = ''
+      this.email = ''
+      this.address = ''
+    },
+    submitData () {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          const data = {
+            id: this.warehouse.id,
+            name: this.warehouse.name,
+            phone: this.warehouse.phone,
+            email: this.warehouse.email,
+            address: this.warehouse.address,
+            attendant: this.attendant.value,
+          }
+          if (this.warehouse.id !== null && this.warehouse.id >= 0) {
+            this.updateWarehouse(data)
+          } else {
+            this.createWarehouse(data)
+          }
+
+
+        }
+      })
+    },
+    createWarehouse(data){
+      axios.post('/warehouses/', data)
+        .then(res => {
+          if (res.data.res) {
+            this.$vs.notify({
+              title: 'Created Success',
+              text: 'You are successfully created!',
+              iconPack: 'feather',
+              icon: 'icon-check',
+              color: 'success'
+            })
+            this.$emit('success')
+            this.$emit('closeModal')
+            this.initValues()
+          } else {
+            this.$vs.notify({
+              title: 'Error',
+              text: res.data.error,
+              iconPack: 'feather',
+              icon: 'icon-alert',
+              color: 'danger'
+            })
+          }
+        })
+    },
+    updateWarehouse(data) {
+      axios.put('/warehouses/'+this.warehouse.id, data)
         .then(res => {
           if (res.data.res === true) {
             this.$vs.notify({
@@ -118,8 +207,10 @@ export default {
               icon: 'icon-check',
               color: 'success'
             })
-            this.editWarehouse = false
+            this.isModalActive = false
             this.$emit('success')
+            this.$emit('closeModal')
+            this.initValues()
           } else {
             this.$vs.notify({
               title: 'Error',

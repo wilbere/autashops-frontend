@@ -1,8 +1,11 @@
 <template lang="html">
   <div>
+    <modal :isModalActive="addNewDataModal" @closeModal="toggleDataModal" :warehouse="modalData" @success="getWarehouses" />
+
     <vs-table
       max-items="10"
       pagination
+      selected
       search
       :data="warehouses">
 
@@ -52,7 +55,7 @@
         </div>
 
 
-        
+
       </div>
 
       <template slot="thead">
@@ -85,7 +88,7 @@
             <div class="con-expand-users">
               <div class="con-btns-user">
                 <div class="con-userx">
-                  <vs-avatar size="45px" :src="tr.attendant.image.url"/>
+                  <vs-avatar v-if="tr.attendant.image != null" size="45px" :src="tr.attendant.image.url"/>
                   <span>
                     {{ tr.attendant.name }}
                   </span>
@@ -93,7 +96,7 @@
 
                 <div>
                   <warehouse-details :warehouse="tr"></warehouse-details>
-                  <edit-warehouse :warehouse="tr" @success='getWarehouses'></edit-warehouse>
+                  <vs-button color="success" vs-type="border" @click="editWarehouse(tr)" size="small" icon="edit"></vs-button>
                   <vs-button vs-type="flat" size="small" color="danger" icon="delete_sweep"></vs-button>
                 </div>
               </div>
@@ -114,16 +117,18 @@
 
 import axios from '../../../../axios.js'
 import WarehouseDetails from './WarehouseDetails.vue'
-import EditWarehouse from './EditWarehouse.vue'
+import Modal from './Modal.vue'
 
 export default {
   components: {
     WarehouseDetails,
-    EditWarehouse
+    Modal
   },
   data: () => {
     return {
-      warehouses: {}
+      warehouses: {},
+      addNewDataModal: false,
+      modalData: {}
     }
   },
   created() {
@@ -134,12 +139,20 @@ export default {
     getWarehouses(){
       axios.get('/warehouses')
         .then(res => {
-          this.warehouses = res.data.data
+          this.warehouses = res.data.warehouses
         })
     },
+    editWarehouse(warehouse){
+      this.modalData = warehouse
+      this.toggleDataModal(true)
+    },
     newWarehouse(){
-      alert('new warehouse')
-    }
+      this.modalData = {}
+      this.toggleDataModal(true)
+    },
+    toggleDataModal (val = false) {
+      this.addNewDataModal = val
+    },
   }
 }
 </script>

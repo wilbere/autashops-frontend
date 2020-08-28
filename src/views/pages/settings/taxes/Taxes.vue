@@ -20,7 +20,7 @@
         <div class="flex flex-wrap-reverse items-center">
 
           <!-- ADD NEW -->
-          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newtax">
+          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newTax">
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
               <span class="ml-2 text-base text-primary">Add New</span>
           </div>
@@ -81,7 +81,7 @@ export default{
       this.modalData = tax
       this.toggleDataModal(true)
     },
-    newtax(){
+    newTax(){
       this.modalData = {}
       this.toggleDataModal(true)
     },
