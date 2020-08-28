@@ -1,97 +1,181 @@
 <template>
   <vx-card no-shadow>
 
-    <!-- Bio -->
-    <vs-textarea label="Bio" v-model="bio" placeholder="Your bio..." />
+    <vs-input
+      v-validate="'required'"
+      data-vv-validate-on="blur"
+      data-vv-name="name"
+      class="w-full mb-2 "
+      label-placeholder="Name"
+      v-model="name" />
+    <span class="text-danger w-full mb-3 text-sm">{{ errors.first('name') }}</span>
 
-    <!-- DOB -->
-    <div class="mt-8">
-      <label class="text-sm">Birth Date</label>
-      <flat-pickr v-model="dob" :config="{ dateFormat: 'd F Y' }" class="w-full" />
-    </div>
+    <vs-input
+      v-validate="'required|numeric'"
+      data-vv-validate-on="blur"
+      data-vv-name="phone"
+      class="w-full mb-2 mt-6"
+      label-placeholder="Phone"
+      v-model="phone" />
+    <span class="text-danger w-full mb-3 text-sm">{{ errors.first('phone') }}</span>
 
-    <!-- Country -->
-    <div class="mt-8">
-      <label class="text-sm">Country</label>
-      <v-select v-model="country" :options="countryOptions" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-    </div>
+    <vs-input
+      v-validate="'required|email'"
+      data-vv-validate-on="blur"
+      data-vv-name="email"
+      class="w-full mb-2 mt-6"
+      label-placeholder="Email"
+      v-model="email" />
+    <span class="text-danger w-full mb-3 text-sm">{{ errors.first('email') }}</span>
 
-    <!-- Languages -->
-    <div class="mt-8">
-      <label class="text-sm">Languages</label>
-      <v-select v-model="lang_known" multiple :closeOnSelect="false" :options="langOptions" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-    </div>
+    <vs-input
+      v-validate="'required'"
+      data-vv-validate-on="blur"
+      data-vv-name="rif"
+      class="w-full mb-2 mt-6"
+      label-placeholder="Rif"
+      v-model="rif" />
+    <span class="text-danger w-full mb-3 text-sm">{{ errors.first('rif') }}</span>
 
-    <!-- Mobile Number -->
-    <vs-input class="w-full mt-8" type="number" label-placeholder="Mobile" v-model="mobile" />
+    <vs-input
+      v-validate="'required'"
+      data-vv-validate-on="blur"
+      data-vv-name="country"
+      class="w-full mb-2 mt-6"
+      label-placeholder="Country"
+      v-model="country" />
+    <span class="text-danger w-full mb-3 text-sm">{{ errors.first('country') }}</span>
 
-    <!-- Website  -->
-    <vs-input class="w-full mt-8" label-placeholder="Website" v-model="website" />
+    <vs-input
+      v-validate="'required'"
+      data-vv-validate-on="blur"
+      data-vv-name="city"
+      class="w-full mb-2 mt-6"
+      label-placeholder="City"
+      v-model="city" />
+    <span class="text-danger w-full mb-3 text-sm">{{ errors.first('city') }}</span>
 
-    <!-- Gender -->
-    <div class="mt-8 mb-base">
-      <label class="text-sm">Gender</label>
-      <div class="mt-2">
-        <vs-radio v-model="gender" vs-value="male" class="mr-4">Male</vs-radio>
-        <vs-radio v-model="gender" vs-value="female" class="mr-4">Female</vs-radio>
-        <vs-radio v-model="gender" vs-value="other">Other</vs-radio>
-      </div>
-    </div>
+    <vs-input
+      v-validate="'required'"
+      data-vv-validate-on="blur"
+      data-vv-name="address"
+      class="w-full mb-2 mt-6"
+      label-placeholder="Address"
+      v-model="address" />
+    <span class="text-danger w-full mb-3 text-sm">{{ errors.first('address') }}</span>
+
 
     <!-- Save & Reset Button -->
     <div class="flex flex-wrap items-center justify-end">
-      <vs-button class="ml-auto mt-2">Save Changes</vs-button>
-      <vs-button class="ml-4 mt-2" type="border" color="warning">Reset</vs-button>
+      <vs-button class="ml-auto mt-2" :disabled="!validateForm" @click="submitData">Save Changes</vs-button>
+      <!-- <vs-button class="ml-4 mt-2" type="border" color="warning">Reset</vs-button> -->
     </div>
   </vx-card>
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
-import 'flatpickr/dist/flatpickr.css'
-import vSelect from 'vue-select'
+import axios from '@/axios.js'
 
 export default {
-  components: {
-    flatPickr,
-    vSelect
-  },
   data () {
     return {
-      bio: this.$store.state.AppActiveUser.about,
-      dob: null,
-      country: 'USA',
-      lang_known: ['English', 'Russian'],
-      gender: 'male',
-      mobile: '',
-      website: '',
-
-      // Options
-      countryOptions: [
-        { label: 'Australia',  value: 'australia'  },
-        { label: 'France',     value: 'france'     },
-        { label: 'Germany',    value: 'germany'    },
-        { label: 'India',      value: 'india'      },
-        { label: 'Jordan',     value: 'jordan'     },
-        { label: 'Morocco',    value: 'morocco'    },
-        { label: 'Portuguese', value: 'portuguese' },
-        { label: 'Syria',      value: 'syria'      },
-        { label: 'USA',        value: 'usa'        }
-      ],
-      langOptions: [
-        { label: 'English',  value: 'english'  },
-        { label: 'Spanish',  value: 'spanish'  },
-        { label: 'French',   value: 'french'   },
-        { label: 'Russian',  value: 'russian'  },
-        { label: 'German',   value: 'german'   },
-        { label: 'Arabic',   value: 'arabic'   },
-        { label: 'Sanskrit', value: 'sanskrit' }
-      ]
+      name: '',
+      phone: '',
+      email: '',
+      rif: '',
+      country: '',
+      city: '',
+      address: ''
     }
   },
   computed: {
-    activeUserInfo () {
+    user () {
       return this.$store.state.auth.currentUser
+    },
+    validateForm () {
+      return  this.errors.any() !== null && this.name !== '' && this.email !== '' && this.phone !== '' && this.rif !== '' && this.country !== '' && this.city !== '' && this.address !== ''
+    },
+  },
+  created () {
+    if (this.user.company) {
+      this.name = this.user.company.name_company
+      this.phone = this.user.company.phone_company
+      this.email = this.user.company.email_company
+      this.address = this.user.company.address_company
+      this.city = this.user.company.city
+      this.country = this.user.company.country
+      this.rif = this.user.company.rif
+      console.log(this.user.company)
+    }
+  },
+  methods: {
+    submitData () {
+
+      const company = {
+        name : this.name,
+        email : this.email,
+        phone : this.phone,
+        rif : this.rif,
+        address : this.address,
+        city : this.city,
+        country : this.phone,
+      }
+
+      if (this.user.company) {
+        this.updateCompany(company)
+      } else {
+        this.createCompany(company)
+      }
+
+
+    },
+    updateCompany(company) {
+      axios.put('/account/'+this.user.company.id_company, company)
+        .then(res => {
+          if (res.data.res == true) {
+
+            this.$vs.notify({
+              title: 'Updated Success',
+              text: 'You are successfully updated!',
+              iconPack: 'feather',
+              icon: 'icon-check',
+              color: 'success'
+            })
+            this.$emit('success')
+          } else {
+            this.$vs.notify({
+              title: 'Error',
+              text: res.data.error,
+              iconPack: 'feather',
+              icon: 'icon-info',
+              color: 'danger'
+            })
+          }
+        })
+    },
+    createCompany(company) {
+      axios.post('/account/'+this.user.id, company)
+        .then(res => {
+          if (res.data.res == true) {
+
+            this.$vs.notify({
+              title: 'Updated Success',
+              text: 'You are successfully updated!',
+              iconPack: 'feather',
+              icon: 'icon-check',
+              color: 'success'
+            })
+            this.$emit('success')
+          } else {
+            this.$vs.notify({
+              title: 'Error',
+              text: res.data.error,
+              iconPack: 'feather',
+              icon: 'icon-info',
+              color: 'danger'
+            })
+          }
+        })
     }
   }
 }
