@@ -12,41 +12,6 @@
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
         <div class="flex flex-wrap-reverse items-center">
-
-          <!-- ACTION - DROPDOWN -->
-          <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
-
-            <div class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32">
-              <span class="mr-2">Actions</span>
-              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-            </div>
-
-            <vs-dropdown-menu>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="LayoutIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Excel</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="FileTextIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>PDF</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="PrinterIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Print</span>
-                </span>
-              </vs-dropdown-item>
-
-            </vs-dropdown-menu>
-          </vs-dropdown>
-
           <!-- ADD NEW -->
           <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newWarehouse">
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
