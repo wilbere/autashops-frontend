@@ -1,6 +1,6 @@
 <!-- =========================================================================================
   File Name: Categories.vue
-  Description: Categories List 
+  Description: Categories List
   ----------------------------------------------------------------------------------------
   Item Name: Autashops - POS, Inventory and eCommerce System
   Author: Wilber Galindez
@@ -60,7 +60,7 @@
         </div>
 
 
-        
+
       </div>
 
       <template slot="thead">
@@ -83,7 +83,7 @@
 
             <vs-td class="whitespace-no-wrap">
               <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editCategory(tr)" />
-              <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
+              <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteCategory(tr.id)" />
             </vs-td>
 
           </vs-tr>
@@ -133,6 +133,19 @@ export default {
       this.sidebarData = data
       this.toggleDataSidebar(true)
     },
+    deleteCategory(id) {
+      axios.delete('/categories/'+id)
+        .then(() => {
+          this.$vs.notify({
+            title: 'Success',
+            text: 'Currency default change',
+            iconPack: 'feather',
+            icon: 'icon-trash2',
+            color: 'success'
+          })
+          this.getCategories()
+        })
+    }
   },
 }
 </script>

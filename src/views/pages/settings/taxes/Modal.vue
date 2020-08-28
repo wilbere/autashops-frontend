@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="centerx">
     <vs-popup  classContent="popup-example"  :title="titleModal" :active.sync="isModalActiveLocal">
-    
+
       <div class="vx-row mb-5">
         <div class="vx-col w-full">
           <vs-input
@@ -10,22 +10,8 @@
             data-vv-name="name"
             class="w-full"
             label-placeholder="Name"
-            v-model="currency.name" />
+            v-model="tax.name" />
             <span class="text-danger w-full ml-3 text-sm">{{ errors.first('name') }}</span>
-
-        </div>
-      </div>
-      
-      <div class="vx-row mb-5">
-        <div class="vx-col w-full">
-          <vs-input
-            v-validate="'required|max:3'"
-            data-vv-validate-on="blur"
-            data-vv-name="symbol"
-            class="w-full"
-            label-placeholder="symbol"
-            v-model="currency.symbol" />
-            <span class="text-danger w-full ml-3 text-sm">{{ errors.first('symbol') }}</span>
 
         </div>
       </div>
@@ -35,18 +21,12 @@
           <vs-input
             v-validate="'required|numeric'"
             data-vv-validate-on="blur"
-            data-vv-name="value"
+            data-vv-name="rate"
             class="w-full"
-            label-placeholder="value"
-            v-model="currency.value" />
-            <span class="text-danger w-full ml-3 text-sm">{{ errors.first('value') }}</span>
+            label-placeholder="rate"
+            v-model="tax.rate" />
+            <span class="text-danger w-full ml-3 text-sm">{{ errors.first('rate') }}</span>
 
-        </div>
-      </div>
-
-      <div class="vx-row mb-5">
-        <div class="vx-col w-full">
-          <vs-checkbox class="ml-3"  v-model="currency.default">Default</vs-checkbox>
         </div>
       </div>
 
@@ -70,7 +50,7 @@ export default {
     vSelect
   },
   props: {
-    currency:{},
+    tax:{},
     isModalActive: {
       type: Boolean,
       required: true
@@ -78,10 +58,10 @@ export default {
   },
   computed: {
     validateForm () {
-      return  this.errors.any() !== null && this.currency.name !== '' && this.currency.symbol !== ''  && this.currency.value !== '' 
+      return  this.errors.any() !== null && this.tax.name !== '' && this.tax.rate !== ''
     },
     titleModal(){
-      return this.currency.id ? 'Edit Currency' : 'New Currency'
+      return this.tax.id ? 'Edit tax' : 'New tax'
     },
     isModalActiveLocal: {
       get () {
@@ -99,7 +79,7 @@ export default {
   data(){
     return {
       name: '',
-      symbol: '',
+      rate: '',
       value: '',
       def: false,
     }
@@ -113,45 +93,39 @@ export default {
       if (Object.entries(this.data).length === 0) {
         this.$validator.reset()
       } else {
-        this.id = this.currency.id
-        this.name = this.currency.name
-        this.symbol = this.currency.symbol
-        this.value = this.currency.value
-        this.def = this.currency.default
+        this.id = this.tax.id
+        this.name = this.tax.name
+        this.rate = this.tax.rate
       }
     }
   },
   methods: {
     initValues () {
-      if (this.currency.id) return
+      if (this.tax.id) return
       this.id = null
       this.name = ''
-      this.symbol = ''
-      this.value = ''
-      this.def = false
+      this.rate = ''
     },
     submitData () {
       this.$validator.validateAll().then(result => {
         if (result) {
           const data = {
-            id: this.currency.id,
-            name: this.currency.name,
-            symbol: this.currency.symbol,
-            value: this.currency.value,
-            default: this.currency.default ? true : false,
+            id: this.tax.id,
+            name: this.tax.name,
+            rate: this.tax.rate,
           }
-          if (this.currency.id !== null && this.currency.id >= 0) {
-            this.updateCurrency(data)
+          if (this.tax.id !== null && this.tax.id >= 0) {
+            this.updatetax(data)
           } else {
-            this.createCurrency(data)
+            this.createtax(data)
           }
 
-         
+
         }
       })
     },
-    createCurrency(data){
-      axios.post('/currencies/', data)
+    createtax(data){
+      axios.post('/taxes/', data)
         .then(res => {
           if (res.data.res) {
             this.$vs.notify({
@@ -175,8 +149,8 @@ export default {
           }
         })
     },
-    updateCurrency(data) {
-      axios.put('/currencies/'+this.currency.id, data)
+    updatetax(data) {
+      axios.put('/taxes/'+this.tax.id, data)
         .then(res => {
           if (res.data.res === true) {
             this.$vs.notify({

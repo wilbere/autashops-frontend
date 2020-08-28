@@ -27,7 +27,7 @@
         </div>
 
 
-        
+
       </div>
       <!-- Currencies -->
       <div class="vx-row">
@@ -42,7 +42,7 @@
               :statistic="currency.value"
               :statisticTitle="currency.name +' ('+currency.symbol+')'"
               :color="currency.default ? 'primary' : 'secondary'" >
-              
+
             </statistics-card-line>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default{
     },
     deleteCurrency(currency){
       axios.delete('/currencies/'+currency)
-        .then(res => {
+        .then(() => {
           this.$vs.notify({
             title: 'Success',
             text: 'Currency default change',
@@ -98,8 +98,8 @@ export default{
             icon: 'icon-trash2',
             color: 'success'
           })
+          this.getCurrencies()
         })
-        this.getCurrencies()
     },
     setDefault(currency){
       axios.get('/currencies/activate/'+currency)
@@ -112,9 +112,9 @@ export default{
               icon: 'icon-check',
               color: 'success'
             })
-          } 
+          }
+          this.getCurrencies()
         })
-      this.getCurrencies()
     }
   }
 }
