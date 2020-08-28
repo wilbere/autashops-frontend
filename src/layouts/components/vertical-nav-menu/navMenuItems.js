@@ -16,6 +16,12 @@ export default [
     icon: "BarChart2Icon",
   },
   {
+    url: "/admin/products",
+    name: "Products",
+    slug: "products",
+    icon: "ArchiveIcon",
+  },
+  {
     url: "/admin/settings",
     name: "Settings",
     slug: "settings",
@@ -53,4 +59,5 @@ export default [
       },
     ]
   },
+
 ]

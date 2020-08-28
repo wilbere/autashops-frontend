@@ -131,6 +131,19 @@ const router = new Router({
                   pageTitle: 'Brands'
                 }
               },
+              {
+                path: '/admin/products/',
+                name: 'Products',
+                component: () => import('./views/pages/products/Products.vue'),
+                meta: {
+                  rule: 'admin',
+                  breadcrumb: [
+                    { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Products', active: true}
+                  ],
+                  pageTitle: 'Products'
+                }
+              },
             ],
         },
     // =============================================================================

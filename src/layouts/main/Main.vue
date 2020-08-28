@@ -142,11 +142,9 @@ import TheFooter           from '@/layouts/components/TheFooter.vue'
 import themeConfig         from '@/../themeConfig.js'
 import VNavMenu            from '@/layouts/components/vertical-nav-menu/VerticalNavMenu.vue'
 
-import CreateWarehouse     from '@/views/pages/settings/warehouses/CreateWarehouse'
 
 export default {
   components: {
-    CreateWarehouse,
     BackToTop,
     HNavMenu,
     TheFooter,
