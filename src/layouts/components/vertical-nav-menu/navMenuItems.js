@@ -19,7 +19,7 @@ export default [
     url: "/admin/products",
     name: "Products",
     slug: "products",
-    icon: "ArchiveIcon",
+    icon: "PackageIcon",
   },
   {
     url: "/admin/settings",

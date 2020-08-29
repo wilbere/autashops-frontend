@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="centerx">
-    <vs-button vs-type="border" @click="popupWarehouse=true" size="small" icon="visibility"></vs-button>
+    <vs-button type="border" @click="popupWarehouse=true" size="small"  icon="visibility" class="mr-2"></vs-button>
     <vs-popup fullscreen :title="warehouse.name" :active.sync="popupWarehouse">
       <vs-row vs-align="center" vs-type="flex" vs-justify="space-around" vs-w="12">
         <vs-col vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="6">
@@ -31,43 +31,50 @@
         </vs-col>
       </vs-row>
       <vs-divider></vs-divider>
-      <vs-table
-        multiple
-        max-items="10"
-        pagination
-        search
-        v-model="selected"
-        :data="warehouse.products">
+      <div v-if="warehouse.products.length > 0">
+        <vs-table
+          multiple
+          max-items="10"
+          pagination
+          search
+          v-model="selected"
+          :data="warehouse.products">
 
-        <template slot="thead">
-          <vs-th>
-            Name
-          </vs-th>
-          <vs-th>
-            Barcode
-          </vs-th>
-          <vs-th>
-            Quantity
-          </vs-th>
+          <template slot="thead">
+            <vs-th>
+              Name
+            </vs-th>
+            <vs-th>
+              Barcode
+            </vs-th>
+            <vs-th>
+              Quantity
+            </vs-th>
 
-        </template>
+          </template>
 
-        <template slot-scope="{data}">
-          <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" >
-            <vs-td :data="data[indextr].name">
-              {{data[indextr].name}}
-            </vs-td>
+          <template slot-scope="{data}">
+            <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data" >
+              <vs-td :data="data[indextr].name">
+                {{data[indextr].name}}
+              </vs-td>
 
-            <vs-td :data="data[indextr].barcode">
-              {{data[indextr].barcode}}
-            </vs-td>
+              <vs-td :data="data[indextr].barcode">
+                {{data[indextr].barcode}}
+              </vs-td>
 
-            <vs-td :data="data[indextr].pivot.qty">
-              {{data[indextr].pivot.qty}}
-            </vs-td>
-          </vs-tr>
-        </template>
-      </vs-table>
+              <vs-td :data="data[indextr].pivot.qty">
+                {{data[indextr].pivot.qty}}
+              </vs-td>
+            </vs-tr>
+          </template>
+        </vs-table>
+      </div>
+      <div v-else>
+        <vs-alert active="true">
+          There are no products stored in this warehouse.
+        </vs-alert>
+      </div>
     </vs-popup>
   </div>
 </template>

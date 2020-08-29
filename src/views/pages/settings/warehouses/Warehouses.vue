@@ -5,7 +5,6 @@
     <vs-table
       max-items="10"
       pagination
-      selected
       search
       :data="warehouses">
 
@@ -48,21 +47,18 @@
           <vs-td :data="tr.phone">
             {{tr.phone}}
           </vs-td>
-
           <template class="expand-user" slot="expand">
-            <div class="con-expand-users">
-              <div class="con-btns-user">
-                <div class="con-userx">
-                  <vs-avatar v-if="tr.attendant.image != null" size="45px" :src="tr.attendant.image.url"/>
-                  <span>
-                    {{ tr.attendant.name }}
-                  </span>
+            <div class="con-expand-users ">
+              <div class="con-btns-user flex items-center justify-between">
+                <div class="con-userx flex items-center justify-start">
+                  <vs-avatar v-if="tr.attendant.image != null"  size="45px" :src="tr.attendant.image.url" />
+                  <span>{{ tr.attendant.name }}</span>
                 </div>
-
-                <div>
+                <div class="flex">
                   <warehouse-details :warehouse="tr"></warehouse-details>
-                  <vs-button color="success" vs-type="border" @click="editWarehouse(tr)" size="small" icon="edit"></vs-button>
-                  <vs-button vs-type="flat" size="small" color="danger" icon="delete_sweep"></vs-button>
+
+                  <vs-button type="border" size="small" @click="editWarehouse(tr)" icon-pack="feather" icon="icon-edit" color="success" class="mr-2"></vs-button>
+                  <vs-button type="border" size="small" icon-pack="feather" icon="icon-trash" color="danger"></vs-button>
                 </div>
               </div>
               <vs-list>

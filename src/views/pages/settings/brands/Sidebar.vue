@@ -23,12 +23,12 @@
         <!-- Product Image -->
         <!-- <template v-if="data.image">
 
-          <!-- Image Container -->
+          <!- Image Container -->
           <!-- <div class="img-container w-64 mx-auto flex items-center justify-center">
             <img :src="data.image.url" alt="img" class="responsive">
           </div> -->
 
-          <!-- Image upload Buttons 
+          <!-- Image upload Buttons
           <div class="modify-img flex justify-between mt-5">
             <input type="file" class="hidden" name="image" ref="updateImgInput" @change="updateCurrImg" accept="image/*">
             <vs-button class="mr-4" type="flat" @click="$refs.updateImgInput.click()">Update Image</vs-button>
