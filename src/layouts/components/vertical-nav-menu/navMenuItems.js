@@ -11,50 +11,74 @@
 export default [
   {
     url: "/admin/dashboard",
-    name: "Dashboard",
-    slug: "Dashboard",
-    icon: "BarChart2Icon",
+    name: "Tablero",
+    slug: "dashboard",
+    icon: "ActivityIcon",
   },
   {
     url: "/admin/products",
-    name: "Products",
+    name: "Productos",
     slug: "products",
     icon: "PackageIcon",
   },
   {
+    url: "/admin/scores",
+    name: "Cuentas",
+    slug: "scores",
+    icon: "DollarSignIcon",
+  },
+  {
+    url: "/admin/clients",
+    name: "Clientes",
+    slug: "clients",
+    icon: "UsersIcon",
+  },
+  {
+    url: "/admin/shipping",
+    name: "Envíos",
+    slug: "shipping",
+    icon: "TruckIcon",
+  },
+  {
+    url: "/admin/suppliers",
+    name: "Proveedores",
+    slug: "suppliers",
+    icon: "AwardIcon",
+  },
+  {
     url: "/admin/settings",
-    name: "Settings",
+    name: "Configuración",
     slug: "settings",
     icon: "SettingsIcon",
     submenu: [
       {
         url: '/admin/settings/brands',
-        name: 'Brands',
+        name: 'Marcas',
         slug: 'brands'
       },
       {
         url: '/admin/settings/categories',
-        name: 'Categories',
+        name: 'Categorías',
         slug: 'categories'
       },
       {
         url: '/admin/settings/currencies',
-        name: 'Currencies',
+        name: 'Monedas',
         slug: 'currencies'
       },
       {
         url: '/admin/settings/taxes',
-        name: 'Tax',
+        name: 'Impuestos',
         slug: 'taxes'
       },
       {
         url: '/admin/settings/units',
-        name: 'Units',
+        name: 'Unidades',
         slug: 'units'
       },
       {
         url: '/admin/settings/warehouses',
-        name: 'Warehouses',
+        name: 'Almacenes',
         slug: 'warehouses'
       },
     ]

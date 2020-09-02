@@ -4,7 +4,7 @@
   Component Name: TheCustomizer
   ----------------------------------------------------------------------------------------
   Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: Wilber Galindez
+  Author: Wilber Galindez
   Author URL: https://www.wilber.dev/
 ========================================================================================== -->
 

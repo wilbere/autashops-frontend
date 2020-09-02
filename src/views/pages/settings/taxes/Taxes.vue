@@ -11,8 +11,11 @@
 <template>
     <div>
       <vs-alert active="true" class="mb-4">
-        Manage your store taxes.
+        Administra los impuestos desde esta ventana :).
       </vs-alert>
+
+      <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getTaxes" />
+
       <modal :isModalActive="addNewDataModal" @closeModal="toggleDataModal" :tax="modalData" @success="getTaxes" />
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
@@ -22,7 +25,7 @@
           <!-- ADD NEW -->
           <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newTax">
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <span class="ml-2 text-base text-primary">Add New</span>
+              <span class="ml-2 text-base text-primary">Impuesto</span>
           </div>
         </div>
 
@@ -38,6 +41,7 @@
               @edit="editTax(tax)"
               hideChart
               class="mb-base "
+              :isSetDefault="false"
               icon="PercentIcon"
               :statistic="tax.rate"
               :statisticTitle="tax.name"
@@ -54,17 +58,21 @@
 import axios from '@/axios.js'
 import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
 import Modal from './Modal.vue'
+import ConfirmDelete from './ConfirmDelete.vue'
 
 export default{
   components: {
     StatisticsCardLine,
-    Modal
+    Modal,
+    ConfirmDelete
   },
   data () {
     return {
       taxes : [],
       addNewDataModal: false,
-      modalData: {}
+      modalData: {},
+      deleteData: '',
+      activeConfirm: false,
     }
   },
   created () {
@@ -88,18 +96,12 @@ export default{
     toggleDataModal (val = false) {
       this.addNewDataModal = val
     },
-    deleteTax(tax){
-      axios.delete('/taxes/'+tax)
-        .then(() => {
-          this.$vs.notify({
-            title: 'Success',
-            text: 'tax default change',
-            iconPack: 'feather',
-            icon: 'icon-trash2',
-            color: 'success'
-          })
-          this.getTaxes()
-        })
+    toggleDeleteModal (val = false) {
+      this.activeConfirm = val
+    },
+    deleteTax(id){
+      this.deleteData = id
+      this.toggleDeleteModal(true)
     },
 
   }

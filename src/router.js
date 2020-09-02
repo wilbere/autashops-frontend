@@ -27,6 +27,7 @@ const router = new Router({
     // =============================================================================
             path: '/admin/',
             component: () => import('./layouts/main/Main.vue'),
+            redirect : '/admin/dashboard',
             children: [
         // =============================================================================
         // Theme Routes
@@ -55,10 +56,10 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
-                    { title: 'Settings' },
-                    { title: 'Warehouses', active: true}
+                    { title: 'Configuración' },
+                    { title: 'Almacenes', active: true}
                   ],
-                  pageTitle: 'Warehouses'
+                  pageTitle: 'Almacenes'
                 }
               },
               {
@@ -69,10 +70,10 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
-                    { title: 'Settings' },
-                    { title: 'Units', active: true}
+                    { title: 'Configuración' },
+                    { title: 'Unidades', active: true}
                   ],
-                  pageTitle: 'Units'
+                  pageTitle: 'Unidades'
                 }
               },
               {
@@ -83,10 +84,10 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
-                    { title: 'Settings' },
-                    { title: 'Currencies', active: true}
+                    { title: 'Configuración' },
+                    { title: 'Monedas', active: true}
                   ],
-                  pageTitle: 'Currencies'
+                  pageTitle: 'Monedas'
                 }
               },
               {
@@ -97,10 +98,10 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
-                    { title: 'Settings' },
-                    { title: 'Categories', active: true}
+                    { title: 'Configuración' },
+                    { title: 'Categorias', active: true}
                   ],
-                  pageTitle: 'Categories'
+                  pageTitle: 'Categorias'
                 }
               },
               {
@@ -111,10 +112,10 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
-                    { title: 'Settings' },
-                    { title: 'Taxes', active: true}
+                    { title: 'Configuración' },
+                    { title: 'Impuestos', active: true}
                   ],
-                  pageTitle: 'Taxes'
+                  pageTitle: 'Impuestos'
                 }
               },
               {
@@ -125,10 +126,10 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
-                    { title: 'Settings' },
-                    { title: 'Brands', active: true}
+                    { title: 'Configuración' },
+                    { title: 'Marcas', active: true}
                   ],
-                  pageTitle: 'Brands'
+                  pageTitle: 'Marcas'
                 }
               },
               {
@@ -139,9 +140,61 @@ const router = new Router({
                   rule: 'admin',
                   breadcrumb: [
                     { title: 'Home', url: '/admin/dashboard' },
-                    { title: 'Products', active: true}
+                    { title: 'Productos', active: true}
                   ],
-                  pageTitle: 'Products'
+                  pageTitle: 'Productos'
+                }
+              },
+              {
+                path: '/admin/clients/',
+                name: 'Clients',
+                component: () => import('./views/pages/clients/Clients.vue'),
+                meta: {
+                  rule: 'admin',
+                  breadcrumb: [
+                    { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Clientes', active: true}
+                  ],
+                  pageTitle: 'Clientes'
+                }
+              },
+              {
+                path: '/admin/suppliers/',
+                name: 'Suppliers',
+                component: () => import('./views/pages/suppliers/Suppliers.vue'),
+                meta: {
+                  rule: 'admin',
+                  breadcrumb: [
+                    { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Proveedores', active: true}
+                  ],
+                  pageTitle: 'Proveedores'
+                }
+              },
+              {
+                path: '/admin/shipping/',
+                name: 'Shipping',
+                component: () => import('./views/pages/shipping/Shipping.vue'),
+                meta: {
+                  rule: 'admin',
+                  breadcrumb: [
+                    { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Envíos', active: true}
+                  ],
+                  pageTitle: 'Envíos'
+                }
+              },
+              {
+                path: '/admin/scores/',
+                name: 'Scores',
+                component: () => import('./views/pages/scores/Scores.vue'),
+                meta: {
+                  rule: 'admin',
+                  breadcrumb: [
+                    { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Cuentas', active: true}
+                  ],
+                  pageTitle: 'Cuentas'
                 }
               },
             ],

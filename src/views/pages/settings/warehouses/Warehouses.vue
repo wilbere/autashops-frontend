@@ -2,6 +2,8 @@
   <div>
     <modal :isModalActive="addNewDataModal" @closeModal="toggleDataModal" :warehouse="modalData" @success="getWarehouses" />
 
+    <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getWarehouses" />
+
     <vs-table
       max-items="10"
       pagination
@@ -14,7 +16,7 @@
           <!-- ADD NEW -->
           <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newWarehouse">
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <span class="ml-2 text-base text-primary">Add New</span>
+              <span class="ml-2 text-base text-primary">Almacen</span>
           </div>
         </div>
 
@@ -24,13 +26,13 @@
 
       <template slot="thead">
         <vs-th>
-          Name
+          Nombre
         </vs-th>
         <vs-th>
-          Address
+          Dirección
         </vs-th>
         <vs-th>
-          Nro
+          Nro.
         </vs-th>
       </template>
 
@@ -58,14 +60,14 @@
                   <warehouse-details :warehouse="tr"></warehouse-details>
 
                   <vs-button type="border" size="small" @click="editWarehouse(tr)" icon-pack="feather" icon="icon-edit" color="success" class="mr-2"></vs-button>
-                  <vs-button type="border" size="small" icon-pack="feather" icon="icon-trash" color="danger"></vs-button>
+                  <vs-button type="border" size="small" icon-pack="feather" icon="icon-trash" color="danger" @click="deleteWarehouse(tr.id)"></vs-button>
                 </div>
               </div>
               <vs-list>
-                <vs-list-item icon="info" title="Warehouse" :subtitle="tr.name"></vs-list-item>
-                <vs-list-item icon="phone" title="Phone" :subtitle="tr.phone"></vs-list-item>
+                <vs-list-item icon="info" title="Almacén" :subtitle="tr.name"></vs-list-item>
+                <vs-list-item icon="phone" title="Teléfono" :subtitle="tr.phone"></vs-list-item>
                 <vs-list-item icon="mail" title="Email" :subtitle="tr.email"></vs-list-item>
-                <vs-list-item icon="info" title="Address" :subtitle="tr.address"></vs-list-item>
+                <vs-list-item icon="info" title="Dirección" :subtitle="tr.address"></vs-list-item>
               </vs-list>
             </div>
           </template>
@@ -79,17 +81,21 @@
 import axios from '../../../../axios.js'
 import WarehouseDetails from './WarehouseDetails.vue'
 import Modal from './Modal.vue'
+import ConfirmDelete from './ConfirmDelete.vue'
 
 export default {
   components: {
     WarehouseDetails,
-    Modal
+    Modal,
+    ConfirmDelete
   },
   data: () => {
     return {
       warehouses: {},
       addNewDataModal: false,
-      modalData: {}
+      modalData: {},
+      deleteData: '',
+      activeConfirm: false,
     }
   },
   created() {
@@ -113,6 +119,13 @@ export default {
     },
     toggleDataModal (val = false) {
       this.addNewDataModal = val
+    },
+    toggleDeleteModal (val = false) {
+      this.activeConfirm = val
+    },
+    deleteWarehouse(id){
+      this.deleteData = id
+      this.toggleDeleteModal(true)
     },
   }
 }

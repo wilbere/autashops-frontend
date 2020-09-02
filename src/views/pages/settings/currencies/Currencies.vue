@@ -11,8 +11,12 @@
 <template>
     <div>
       <vs-alert active="true" class="mb-4">
-        The system uses the currency that is activated with the main color.
+        Necesitamos usar una moneda por defecto.
       </vs-alert>
+
+      <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getCurrencies" />
+
+
       <modal :isModalActive="addNewDataModal" @closeModal="toggleDataModal" :currency="modalData" @success="getCurrencies" />
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
@@ -22,7 +26,7 @@
           <!-- ADD NEW -->
           <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newCurrency">
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <span class="ml-2 text-base text-primary">Add New</span>
+              <span class="ml-2 text-base text-primary">Moneda</span>
           </div>
         </div>
 
@@ -39,6 +43,7 @@
               hideChart
               class="mb-base "
               icon="DollarSignIcon"
+              :isSetDefault="true"
               :statistic="currency.value"
               :statisticTitle="currency.name +' ('+currency.symbol+')'"
               :color="currency.default ? 'primary' : 'secondary'" >
@@ -54,17 +59,22 @@
 import axios from '@/axios.js'
 import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
 import Modal from './Modal.vue'
+import ConfirmDelete from './ConfirmDelete.vue'
 
 export default{
   components: {
     StatisticsCardLine,
-    Modal
+    Modal,
+    ConfirmDelete
   },
   data () {
     return {
       currencies : [],
       addNewDataModal: false,
-      modalData: {}
+      modalData: {},
+      deleteData: '',
+      activeConfirm: false,
+
     }
   },
   created () {
@@ -88,18 +98,12 @@ export default{
     toggleDataModal (val = false) {
       this.addNewDataModal = val
     },
-    deleteCurrency(currency){
-      axios.delete('/currencies/'+currency)
-        .then(() => {
-          this.$vs.notify({
-            title: 'Success',
-            text: 'Currency default change',
-            iconPack: 'feather',
-            icon: 'icon-trash2',
-            color: 'success'
-          })
-          this.getCurrencies()
-        })
+    toggleDeleteModal (val = false) {
+      this.activeConfirm = val
+    },
+    deleteCurrency(id){
+      this.deleteData = id
+      this.toggleDeleteModal(true)
     },
     setDefault(currency){
       axios.get('/currencies/activate/'+currency)

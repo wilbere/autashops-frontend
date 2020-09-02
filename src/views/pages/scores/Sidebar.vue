@@ -11,7 +11,7 @@
 <template>
   <vs-sidebar click-not-close position-right parent="body" default-index="1" color="primary" class="add-new-data-sidebar items-no-padding" spacer v-model="isSidebarActiveLocal">
     <div class="mt-6 flex items-center justify-between px-6">
-        <h4>{{ Object.entries(this.data).length === 0 ? "NUEVA" : "ACTUALIZAR" }} CATEGORIA</h4>
+        <h4>{{ Object.entries(this.data).length === 0 ? "ADD NEW" : "UPDATE" }} BRAND</h4>
         <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <vs-divider class="mb-0"></vs-divider>
@@ -20,20 +20,57 @@
 
       <div class="p-6">
 
+        <!-- Product Image -->
+        <!-- <template v-if="data.image">
+
+          <!- Image Container -->
+          <!-- <div class="img-container w-64 mx-auto flex items-center justify-center">
+            <img :src="data.image.url" alt="img" class="responsive">
+          </div> -->
+
+          <!-- Image upload Buttons
+          <div class="modify-img flex justify-between mt-5">
+            <input type="file" class="hidden" name="image" ref="updateImgInput" @change="updateCurrImg" accept="image/*">
+            <vs-button class="mr-4" type="flat" @click="$refs.updateImgInput.click()">Update Image</vs-button>
+            <vs-button type="flat" color="#999" @click="data.image = null">Remove Image</vs-button>
+          </div>
+        </template> -->
+
+        <!-- ACCOUNT NO. -->
+        <vs-input label="Account No." v-model="data.account_no" class="mt-5 w-full" name="account_no" v-validate="'required|digits:20'" />
+        <span class="text-danger text-sm" v-show="errors.has('account_no')">{{ errors.first('account_no') }}</span>
+
         <!-- NAME -->
-        <vs-input label="Nombre" v-model="data.name" class="mt-5 w-full" name="item-name" v-validate="'required'" />
+        <vs-input label="Name" v-model="data.name" class="mt-5 w-full" name="item-name" v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('item-name')">{{ errors.first('item-name') }}</span>
 
-        <!-- DESCRIPTION -->
-        <vs-input label="Descripción" v-model="data.description" class="mt-5 w-full" name="description" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
+        <!-- BALANCE -->
+        <vs-input label="Balance" v-model="data.balance" class="mt-5 w-full" name="balance" v-validate="'required|decimal:2'" />
+        <span class="text-danger text-sm" v-show="errors.has('balance')">{{ errors.first('balance') }}</span>
 
+        <!-- NOTE -->
+        <vs-textarea name="note" class="mt-5 w-full"  label="Note"  v-model="data.note" />
+        <span class="text-danger text-sm" v-show="errors.has('note')">{{ errors.first('note') }}</span>
+
+        <div class="vx-row mt-5 mb-5">
+          <div class="vx-col w-full">
+            <vs-checkbox class="ml-3"  v-model="data.default">Default</vs-checkbox>
+          </div>
+        </div>
+
+        <!-- Upload -->
+        <!-- <vs-upload text="Upload Image" class="img-upload" ref="fileUpload" /> -->
+
+        <!-- <div class="upload-img mt-5" v-if="!data.image">
+          <input type="file" class="hidden" ref="uploadImgInput" @change="updateCurrImg" accept="image/*">
+          <vs-button @click="$refs.uploadImgInput.click()">Upload Image</vs-button>
+        </div> -->
       </div>
     </component>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">Enviar</vs-button>
-      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancelar</vs-button>
+      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">Submit</vs-button>
+      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancel</vs-button>
     </div>
   </vs-sidebar>
 </template>
@@ -58,7 +95,10 @@ export default {
 
       id: null,
       name: '',
-      description: '',
+      account_no: '',
+      balance: '',
+      default: false,
+      note: '',
 
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
@@ -73,10 +113,14 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        // const {id, description, name } = JSON.parse(JSON.stringify(this.data))
+        // const {id, image, name } = JSON.parse(JSON.stringify(this.data))
         this.id = this.data.id
+        // this.image = this.data.image.url
         this.name = this.data.name
-        this.description = this.data.description
+        this.account_no = this.data.account_no
+        this.balance = this.data.balance
+        this.default = this.data.default
+        this.note = this.data.note
         this.initValues()
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.id, this.name, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -105,18 +149,31 @@ export default {
       if (this.data.id) return
       this.id = null
       this.name = ''
-      this.description = ''
+      this.account_no = ''
+      this.balance = ''
+      this.default = false
+      this.note = ''
+      // this.image = null
     },
+    // uploadImgInput(){
+    //   this.updateCurrImg()
+    // },
+    // updateImgInput(){
+    //   alert('subiendo imagen')
+    // },
     submitData () {
       this.$validator.validateAll().then(result => {
         if (result) {
-          const category = {
+          let score = {
             id: this.data.id,
+            account_no: this.data.account_no,
             name: this.data.name,
-            description: this.data.description,
+            balance: this.data.balance,
+            default: this.data.default,
+            note: this.data.note,
           }
           if (this.data.id !== null && this.data.id >= 0) {
-            axios.put('/categories/'+this.data.id, category)
+            axios.put('/scores/'+this.data.id, score)
               .then(res => {
                 if (res.data.res) {
                   this.$vs.notify({
@@ -126,11 +183,13 @@ export default {
                     icon: 'icon-check',
                     color: 'success'
                   })
-                  this.$emit('success')
+                  this.$emit('successUpdate')
+                  this.$emit('closeSidebar')
+                  this.initValues()
                 } else {
                   this.$vs.notify({
                     title: 'Update Error',
-                    text: res.data.errors,
+                    text: res.data.error,
                     iconPack: 'feather',
                     icon: 'icon-alert',
                     color: 'danger'
@@ -138,7 +197,7 @@ export default {
                 }
               })
           } else {
-            axios.post('/categories/', category)
+            axios.post('/scores/', score)
               .then(res => {
                 if (res.data.res) {
                   this.$vs.notify({
@@ -148,7 +207,9 @@ export default {
                     icon: 'icon-check',
                     color: 'success'
                   })
-                  this.$emit('success')
+                  this.$emit('successUpdate')
+                  this.$emit('closeSidebar')
+                  this.initValues()
                 } else {
                   this.$vs.notify({
                     title: 'Error',
@@ -161,21 +222,20 @@ export default {
               })
           }
 
-          this.$emit('closeSidebar')
-          this.initValues()
+
         }
       })
     },
-    updateCurrImg (input) {
-      if (input.target.files && input.target.files[0]) {
-        const reader = new FileReader()
-        reader.onload = e => {
-          this.description = input.target.files[0]
-          this.data.description.url = e.target.result
-        }
-        reader.readAsDataURL(input.target.files[0])
-      }
-    }
+    // updateCurrImg (input) {
+    //   if (input.target.files && input.target.files[0]) {
+    //     const reader = new FileReader()
+    //     reader.onload = e => {
+    //       this.image = input.target.files[0]
+    //       this.data.image.url = e.target.result
+    //     }
+    //     reader.readAsDataURL(input.target.files[0])
+    //   }
+    // }
   }
 }
 </script>

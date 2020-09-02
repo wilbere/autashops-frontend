@@ -1,5 +1,9 @@
 <template lang="html">
   <div>
+
+    <modal :isModalActive="addNewDataModal" @closeModal="toggleDataModal" :product="modalData" @success="getProducts" />
+
+
     <vs-table :data="products">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
@@ -80,14 +84,18 @@
 <script>
 import axios from '@/axios.js'
 import ProductDetails from './ProductDetails.vue'
+import Modal from './Modal.vue'
 
 export default {
   components : {
-    ProductDetails
+    ProductDetails,
+    Modal
   },
   data() {
     return {
-      products: []
+      products: [],
+      modalData: {},
+      addNewDataModal: false
     }
   },
   created () {
@@ -102,9 +110,17 @@ export default {
         })
 
     },
+    editProduct(product){
+      this.modalData = product
+      this.toggleDataModal(true)
+    },
     newProduct(){
-      console.log('newProduct()')
-    }
+      this.modalData = {}
+      this.toggleDataModal(true)
+    },
+    toggleDataModal (val = false) {
+      this.addNewDataModal = val
+    },
   }
 
 }

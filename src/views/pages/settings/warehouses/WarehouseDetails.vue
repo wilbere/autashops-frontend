@@ -12,23 +12,21 @@
         </vs-col>
         <vs-col vs-type="flex" vs-justify="flex-end" vs-align="center" vs-w="6">
           <vs-list>
-            <vs-list-item icon="info" title="Warehouse" :subtitle="warehouse.name"></vs-list-item>
-            <vs-list-item icon="phone" title="Phone" :subtitle="warehouse.phone"></vs-list-item>
+            <vs-list-item icon="info" title="Almacén" :subtitle="warehouse.name"></vs-list-item>
+            <vs-list-item icon="phone" title="Teléfono" :subtitle="warehouse.phone"></vs-list-item>
             <vs-list-item icon="mail" title="Email" :subtitle="warehouse.email"></vs-list-item>
-            <vs-list-item icon="info" title="Address" :subtitle="warehouse.address"></vs-list-item>
+            <vs-list-item icon="info" title="Dirección" :subtitle="warehouse.address"></vs-list-item>
           </vs-list>
         </vs-col>
       </vs-row>
       <vs-divider></vs-divider>
       <vs-row vs-align="center" vs-type="flex" vs-justify="space-around" vs-w="12">
-        <vs-col vs-type="flex" vs-justify="left" vs-align="center" vs-w="6">
+        <vs-col vs-type="flex" vs-justify="left" vs-align="center" vs-w="12">
           <h3>
-            Products in {{ warehouse.name }}
+            Productos en {{ warehouse.name }}
           </h3>
         </vs-col>
-        <vs-col vs-type="flex" vs-justify="flex-end" vs-align="center" vs-w="6">
-          <vs-button vs-type="border"  size="small" icon="send"></vs-button>
-        </vs-col>
+
       </vs-row>
       <vs-divider></vs-divider>
       <div v-if="warehouse.products.length > 0">
@@ -40,15 +38,31 @@
           v-model="selected"
           :data="warehouse.products">
 
+          <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
+
+            <div class="flex flex-wrap-reverse items-center">
+
+              <!-- TRANSFER -->
+              <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" >
+                  <feather-icon icon="SendIcon" svgClasses="h-4 w-4" />
+                  <span class="ml-2 text-base text-primary">Transferir </span>
+              </div>
+            </div>
+
+
+
+
+          </div>
+
           <template slot="thead">
             <vs-th>
-              Name
+              Nombre
             </vs-th>
             <vs-th>
-              Barcode
+              Codigo de Barras
             </vs-th>
             <vs-th>
-              Quantity
+              Cantidad
             </vs-th>
 
           </template>
@@ -72,7 +86,7 @@
       </div>
       <div v-else>
         <vs-alert active="true">
-          There are no products stored in this warehouse.
+          Actualmente no existén productos en este almacén.
         </vs-alert>
       </div>
     </vs-popup>

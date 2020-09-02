@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="centerx">
     <vs-popup  classContent="popup-example"  :title="titleModal" :active.sync="isModalActiveLocal">
-    
+
       <div class="vx-row mb-5">
         <div class="vx-col w-full">
           <vs-input
@@ -9,13 +9,13 @@
             data-vv-validate-on="blur"
             data-vv-name="name"
             class="w-full"
-            label-placeholder="Name"
+            label-placeholder="Nombre"
             v-model="currency.name" />
             <span class="text-danger w-full ml-3 text-sm">{{ errors.first('name') }}</span>
 
         </div>
       </div>
-      
+
       <div class="vx-row mb-5">
         <div class="vx-col w-full">
           <vs-input
@@ -23,7 +23,7 @@
             data-vv-validate-on="blur"
             data-vv-name="symbol"
             class="w-full"
-            label-placeholder="symbol"
+            label-placeholder="Simbolo"
             v-model="currency.symbol" />
             <span class="text-danger w-full ml-3 text-sm">{{ errors.first('symbol') }}</span>
 
@@ -37,7 +37,7 @@
             data-vv-validate-on="blur"
             data-vv-name="value"
             class="w-full"
-            label-placeholder="value"
+            label-placeholder="Valor"
             v-model="currency.value" />
             <span class="text-danger w-full ml-3 text-sm">{{ errors.first('value') }}</span>
 
@@ -46,13 +46,13 @@
 
       <div class="vx-row mb-5">
         <div class="vx-col w-full">
-          <vs-checkbox class="ml-3"  v-model="currency.default">Default</vs-checkbox>
+          <vs-checkbox class="ml-3"  v-model="currency.default">Usar moneda por defecto</vs-checkbox>
         </div>
       </div>
 
       <div class="vx-row">
         <div class="vx-col w-full">
-          <vs-button class="ml-3 mb-2"  :disabled="!validateForm" @click="submitData">Submit</vs-button>
+          <vs-button class="ml-3 mb-2"  :disabled="!validateForm" @click="submitData">Enviar</vs-button>
         </div>
       </div>
 
@@ -78,10 +78,10 @@ export default {
   },
   computed: {
     validateForm () {
-      return  this.errors.any() !== null && this.currency.name !== '' && this.currency.symbol !== ''  && this.currency.value !== '' 
+      return  this.errors.any() !== null && this.currency.name !== '' && this.currency.symbol !== ''  && this.currency.value !== ''
     },
     titleModal(){
-      return this.currency.id ? 'Edit Currency' : 'New Currency'
+      return this.currency.id ? 'Editar Moneda' : 'Nueva Moneda'
     },
     isModalActiveLocal: {
       get () {
@@ -146,7 +146,7 @@ export default {
             this.createCurrency(data)
           }
 
-         
+
         }
       })
     },
@@ -155,8 +155,8 @@ export default {
         .then(res => {
           if (res.data.res) {
             this.$vs.notify({
-              title: 'Created Success',
-              text: 'You are successfully created!',
+              title: 'Aprobado',
+              text: 'Moneda creada exitosamente',
               iconPack: 'feather',
               icon: 'icon-check',
               color: 'success'
@@ -166,7 +166,7 @@ export default {
             this.initValues()
           } else {
             this.$vs.notify({
-              title: 'Error',
+              title: 'Ha ocurrido un error',
               text: res.data.error,
               iconPack: 'feather',
               icon: 'icon-alert',
@@ -180,19 +180,18 @@ export default {
         .then(res => {
           if (res.data.res === true) {
             this.$vs.notify({
-              title: 'Update Success',
-              text: 'You are successfully updated!',
+              title: 'Aprobado',
+              text: 'Datos actualizados exitosamente!',
               iconPack: 'feather',
               icon: 'icon-check',
               color: 'success'
             })
-            this.isModalActive = false
             this.$emit('success')
             this.$emit('closeModal')
             this.initValues()
           } else {
             this.$vs.notify({
-              title: 'Error',
+              title: 'Ha ocurrido un error',
               text: res.data.error,
               iconPack: 'feather',
               icon: 'icon-check',

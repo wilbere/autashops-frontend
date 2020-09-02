@@ -11,7 +11,7 @@
 <template>
   <vs-sidebar click-not-close position-right parent="body" default-index="1" color="primary" class="add-new-data-sidebar items-no-padding" spacer v-model="isSidebarActiveLocal">
     <div class="mt-6 flex items-center justify-between px-6">
-        <h4>{{ Object.entries(this.data).length === 0 ? "ADD NEW" : "UPDATE" }} UNIT</h4>
+        <h4>{{ Object.entries(this.data).length === 0 ? "NUEVA" : "ACTUALIZAR" }} UNIDAD</h4>
         <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <vs-divider class="mb-0"></vs-divider>
@@ -21,22 +21,22 @@
       <div class="p-6">
 
         <!-- NAME -->
-        <vs-input label="Name" v-model="data.name" class="mt-5 w-full" name="item-name" v-validate="'required'" />
+        <vs-input label="Nombre" v-model="data.name" class="mt-5 w-full" name="item-name" v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('item-name')">{{ errors.first('item-name') }}</span>
 
-        <vs-input label="Code" v-model="data.code" class="mt-5 w-full" name="item-code" v-validate="'required'" />
+        <vs-input label="Codigo" v-model="data.code" class="mt-5 w-full" name="item-code" v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('item-code')">{{ errors.first('item-code') }}</span>
 
         <!-- DESCRIPTION -->
-        <vs-input label="Description" v-model="data.description" class="mt-5 w-full" name="description" v-validate="'required'" />
+        <vs-input label="Descripción" v-model="data.description" class="mt-5 w-full" name="description" v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
 
       </div>
     </component>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">Submit</vs-button>
-      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancel</vs-button>
+      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">Enviar</vs-button>
+      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancelar</vs-button>
     </div>
   </vs-sidebar>
 </template>
@@ -127,8 +127,8 @@ export default {
               .then(res => {
                 if (res.data.res) {
                   this.$vs.notify({
-                    title: 'Update Success',
-                    text: 'You are successfully updated!',
+                    title: 'Aprobado',
+                    text: 'Se ha actualizado la unidad con éxito!',
                     iconPack: 'feather',
                     icon: 'icon-check',
                     color: 'success'
@@ -136,8 +136,8 @@ export default {
                   this.$emit('success')
                 } else {
                   this.$vs.notify({
-                    title: 'Update Error',
-                    text: res.data.errors,
+                    title: 'Ha ocurrido un error',
+                    text: res.data.error,
                     iconPack: 'feather',
                     icon: 'icon-alert',
                     color: 'danger'

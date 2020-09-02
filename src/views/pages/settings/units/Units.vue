@@ -10,9 +10,15 @@
 <template>
   <div id="data-list-thumb-view" class="data-list-container">
 
+    <vs-alert active="true" class="mb-4">
+      Administra las unidades de venta existentes en tu inventario desde esta ventana :).
+    </vs-alert>
+
+    <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getUnits" />
+
     <sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" @success="getUnits" />
 
-    <vs-table ref="table" multiple v-model="selected" pagination max-items="8" search :data="units">
+    <vs-table ref="table" v-model="selected" pagination max-items="8" search :data="units">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -22,7 +28,7 @@
           <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
 
             <div class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32">
-              <span class="mr-2">Actions</span>
+              <span class="mr-2">Opciones</span>
               <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
             </div>
 
@@ -55,7 +61,7 @@
           <!-- ADD NEW -->
           <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newUnit">
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <span class="ml-2 text-base text-primary">Add New</span>
+              <span class="ml-2 text-base text-primary">Unidad</span>
           </div>
         </div>
 
@@ -65,10 +71,10 @@
 
       <template slot="thead">
         <!-- <vs-th>Image</vs-th> -->
-        <vs-th sort-key="name">Name</vs-th>
-        <vs-th sort-key="code">Code</vs-th>
-        <vs-th sort-key="description">Description</vs-th>
-        <vs-th>Action</vs-th>
+        <vs-th sort-key="name">Nombre</vs-th>
+        <vs-th sort-key="code">Codigo</vs-th>
+        <vs-th sort-key="description">Descripción</vs-th>
+        <vs-th>Acción</vs-th>
       </template>
 
       <template slot-scope="{data}">
@@ -100,10 +106,12 @@
 <script>
 import axios from '@/axios.js'
 import Sidebar from './Sidebar.vue'
+import ConfirmDelete from './ConfirmDelete.vue'
 
 export default {
   components: {
-    Sidebar
+    Sidebar,
+    ConfirmDelete
   },
   data () {
     return {
@@ -111,7 +119,9 @@ export default {
       units: [],
       isMounted: false,
       addNewDataSidebar: false,
-      sidebarData: {}
+      sidebarData: {},
+      deleteData: '',
+      activeConfirm: false,
     }
   },
   created(){
@@ -137,19 +147,13 @@ export default {
       this.sidebarData = data
       this.toggleDataSidebar(true)
     },
-    deleteUnit(id) {
-      axios.delete('/units/'+id)
-        .then(() => {
-          this.$vs.notify({
-            title: 'Success',
-            text: 'Currency default change',
-            iconPack: 'feather',
-            icon: 'icon-trash2',
-            color: 'success'
-          })
-          this.getUnits()
-        })
-    }
+    toggleDeleteModal (val = false) {
+      this.activeConfirm = val
+    },
+    deleteUnit(id){
+      this.deleteData = id
+      this.toggleDeleteModal(true)
+    },
   },
 }
 </script>

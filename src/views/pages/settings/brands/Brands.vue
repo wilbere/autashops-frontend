@@ -1,6 +1,6 @@
 <!-- =========================================================================================
   File Name: Brands.vue
-  Description: Brand List 
+  Description: Brand List
   ----------------------------------------------------------------------------------------
   Item Name: Autashops - POS, Inventory and eCommerce System
   Author: Wilber Galindez
@@ -10,9 +10,11 @@
 <template>
   <div id="data-list-thumb-view" class="data-list-container">
 
+    <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDataModal" :id="modalData" @success="getBrands" />
+
     <sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" @successUpdate="getBrands" />
 
-    <vs-table ref="table" multiple v-model="selected" pagination max-items="6" search :data="brands">
+    <vs-table ref="table" v-model="selected" pagination max-items="6" search :data="brands">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -22,7 +24,7 @@
           <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
 
             <div class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32">
-              <span class="mr-2">Actions</span>
+              <span class="mr-2">Opciones</span>
               <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
             </div>
 
@@ -55,38 +57,38 @@
           <!-- ADD NEW -->
           <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newBrand">
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <span class="ml-2 text-base text-primary">Add New</span>
+              <span class="ml-2 text-base text-primary">Marca</span>
           </div>
         </div>
 
 
-        
+
       </div>
 
       <template slot="thead">
-        <!-- <vs-th>Image</vs-th> -->
-        <vs-th sort-key="name">Name</vs-th>
-        <vs-th>Action</vs-th>
+        <vs-th>Imagen</vs-th>
+        <vs-th sort-key="name">Nombre</vs-th>
+        <vs-th>Acción</vs-th>
       </template>
 
       <template slot-scope="{data}">
         <tbody>
           <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
-            <!-- <vs-td class="img-container">
+            <vs-td class="img-container">
               <img v-if="tr.image != null" :src="tr.image.url" class="product-img" />
               <p v-else >N/A</p>
-            </vs-td> -->
+            </vs-td>
 
             <vs-td>
               <p class="product-name font-medium truncate">{{ tr.name }}</p>
             </vs-td>
 
-           
+
 
             <vs-td class="whitespace-no-wrap">
               <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editBrand(tr)" />
-              <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
+              <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click="openConfirm(tr.id)" />
             </vs-td>
 
           </vs-tr>
@@ -99,10 +101,12 @@
 <script>
 import axios from '@/axios.js'
 import Sidebar from './Sidebar.vue'
+import ConfirmDelete from './ConfirmDelete.vue'
 
 export default {
   components: {
-    Sidebar
+    Sidebar,
+    ConfirmDelete
   },
   data () {
     return {
@@ -110,7 +114,9 @@ export default {
       brands: [],
       isMounted: false,
       addNewDataSidebar: false,
-      sidebarData: {}
+      sidebarData: {},
+      activeConfirm: false,
+      modalData: ''
     }
   },
   created(){
@@ -135,6 +141,13 @@ export default {
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
       this.sidebarData = data
       this.toggleDataSidebar(true)
+    },
+    openConfirm(id) {
+      this.modalData = id
+      this.toggleDataModal(true)
+    },
+    toggleDataModal (val = false) {
+      this.activeConfirm = val
     },
   },
 }

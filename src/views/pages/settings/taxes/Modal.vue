@@ -9,7 +9,7 @@
             data-vv-validate-on="blur"
             data-vv-name="name"
             class="w-full"
-            label-placeholder="Name"
+            label-placeholder="Nombre"
             v-model="tax.name" />
             <span class="text-danger w-full ml-3 text-sm">{{ errors.first('name') }}</span>
 
@@ -23,7 +23,7 @@
             data-vv-validate-on="blur"
             data-vv-name="rate"
             class="w-full"
-            label-placeholder="rate"
+            label-placeholder="Rate"
             v-model="tax.rate" />
             <span class="text-danger w-full ml-3 text-sm">{{ errors.first('rate') }}</span>
 
@@ -32,7 +32,7 @@
 
       <div class="vx-row">
         <div class="vx-col w-full">
-          <vs-button class="ml-3 mb-2"  :disabled="!validateForm" @click="submitData">Submit</vs-button>
+          <vs-button class="ml-3 mb-2"  :disabled="!validateForm" @click="submitData">Enviar</vs-button>
         </div>
       </div>
 
@@ -129,8 +129,8 @@ export default {
         .then(res => {
           if (res.data.res) {
             this.$vs.notify({
-              title: 'Created Success',
-              text: 'You are successfully created!',
+              title: 'Aprobado',
+              text: 'Impuesto creado exitosamente!',
               iconPack: 'feather',
               icon: 'icon-check',
               color: 'success'

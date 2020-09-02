@@ -11,49 +11,50 @@
 <template>
   <vs-sidebar click-not-close position-right parent="body" default-index="1" color="primary" class="add-new-data-sidebar items-no-padding" spacer v-model="isSidebarActiveLocal">
     <div class="mt-6 flex items-center justify-between px-6">
-        <h4>{{ Object.entries(this.data).length === 0 ? "ADD NEW" : "UPDATE" }} BRAND</h4>
+        <h4>{{ Object.entries(this.data).length === 0 ? "NUEVA" : "ACTUALIZAR" }} MARCA</h4>
         <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <vs-divider class="mb-0"></vs-divider>
 
+    <form enctype="multipart/form-data">
     <component :is="scrollbarTag" class="scroll-area--data-list-add-new" :settings="settings" :key="$vs.rtl">
 
       <div class="p-6">
-
         <!-- Product Image -->
-        <!-- <template v-if="data.image">
+        <template v-if="data.image || thumbnail">
 
-          <!- Image Container -->
-          <!-- <div class="img-container w-64 mx-auto flex items-center justify-center">
-            <img :src="data.image.url" alt="img" class="responsive">
-          </div> -->
-
-          <!-- Image upload Buttons
-          <div class="modify-img flex justify-between mt-5">
-            <input type="file" class="hidden" name="image" ref="updateImgInput" @change="updateCurrImg" accept="image/*">
-            <vs-button class="mr-4" type="flat" @click="$refs.updateImgInput.click()">Update Image</vs-button>
-            <vs-button type="flat" color="#999" @click="data.image = null">Remove Image</vs-button>
+          <!-- Image Container -->
+          <div class="img-container w-64 mx-auto flex items-center justify-center">
+            <img :src="thumbnail ? thumbnail : data.image.url" alt="img" class="responsive">
           </div>
-        </template> -->
+
+          <!-- Image upload Buttons -->
+          <div class="modify-img flex justify-between mt-5">
+            <input type="file" class="hidden" name="image" ref="updateImgInput" @change="getImage" accept="image/*">
+            <vs-button class="mr-4" type="flat" @click="$refs.updateImgInput.click()">Cambiar Imagen</vs-button>
+            <vs-button type="flat" color="#999" @click="data.image ? data.image = null : img_min = null">Remover Imagen</vs-button>
+          </div>
+        </template>
 
         <!-- NAME -->
-        <vs-input label="Name" v-model="data.name" class="mt-5 w-full" name="item-name" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('item-name')">{{ errors.first('item-name') }}</span>
+        <vs-input label="Nombre" v-model="data.name" class="mt-5 w-full" name="name" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
 
         <!-- Upload -->
         <!-- <vs-upload text="Upload Image" class="img-upload" ref="fileUpload" /> -->
 
-        <!-- <div class="upload-img mt-5" v-if="!data.image">
-          <input type="file" class="hidden" ref="uploadImgInput" @change="updateCurrImg" accept="image/*">
-          <vs-button @click="$refs.uploadImgInput.click()">Upload Image</vs-button>
-        </div> -->
+        <div class="upload-img mt-5" v-if="!data.image">
+          <input type="file" class="hidden" name="image" ref="uploadImgInput" @change="getImage" accept="image/*">
+          <vs-button @click="$refs.uploadImgInput.click()">Subir Imagen</vs-button>
+        </div>
       </div>
     </component>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">Submit</vs-button>
-      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancel</vs-button>
+      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">Enviar</vs-button>
+      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancelar</vs-button>
     </div>
+    </form>
   </vs-sidebar>
 </template>
 
@@ -75,9 +76,12 @@ export default {
   data () {
     return {
 
-      id: null,
-      name: '',
+      brand : {
+        id: null,
+        name: '',
+      },
       image: null,
+      img_min: '',
 
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
@@ -86,6 +90,9 @@ export default {
     }
   },
   watch: {
+    thumbnail() {
+      return this.img_min
+    },
     isSidebarActive (val) {
       if (!val) return
       if (Object.entries(this.data).length === 0) {
@@ -102,6 +109,9 @@ export default {
     }
   },
   computed: {
+    thumbnail() {
+      return this.img_min
+    },
     isSidebarActiveLocal: {
       get () {
         return this.isSidebarActive
@@ -109,8 +119,8 @@ export default {
       set (val) {
         if (!val) {
           this.$emit('closeSidebar')
-          // this.$validator.reset()
-          // this.initValues()
+          this.$validator.reset()
+          this.initValues()
         }
       }
     },
@@ -124,81 +134,106 @@ export default {
       if (this.data.id) return
       this.id = null
       this.name = ''
-      // this.image = null
+      this.image = ''
     },
-    // uploadImgInput(){
-    //   this.updateCurrImg()
-    // },
-    // updateImgInput(){
-    //   alert('subiendo imagen')
-    // },
     submitData () {
+
       this.$validator.validateAll().then(result => {
         if (result) {
-          const brand = {
-            id: this.data.id,
-            name: this.data.name,
-          }
+          let brand = new FormData()
+          brand.append('name', this.data.name)
+          brand.append('id', this.data.id)
+          brand.append('data', new Blob([JSON.stringify(this.image)], { type: 'application/json'}))
+          console.log('submitData formdata', this.image)
+          brand.append('image', this.image)
+          brand.append('image_id', this.data.image ? this.data.image.id : '')
+
+          console.log('submitData()', brand)
+
           if (this.data.id !== null && this.data.id >= 0) {
-            axios.put('/brands/'+this.data.id, brand)
-              .then(res => {
-                if (res.data.res) {
-                  this.$vs.notify({
-                    title: 'Update Success',
-                    text: 'You are successfully updated!',
-                    iconPack: 'feather',
-                    icon: 'icon-check',
-                    color: 'success'
-                  })
-                  this.$emit('successUpdate')
-                } else {
-                  this.$vs.notify({
-                    title: 'Update Error',
-                    text: res.data.errors,
-                    iconPack: 'feather',
-                    icon: 'icon-alert',
-                    color: 'danger'
-                  })
-                }
-              })
+            this.editBrand(brand);
           } else {
-            axios.post('/brands/', brand)
-              .then(res => {
-                if (res.data.res) {
-                  this.$vs.notify({
-                    title: 'Created Success',
-                    text: 'You are successfully created!',
-                    iconPack: 'feather',
-                    icon: 'icon-check',
-                    color: 'success'
-                  })
-                  this.$emit('successUpdate')
-                } else {
-                  this.$vs.notify({
-                    title: 'Error',
-                    text: res.data.errors,
-                    iconPack: 'feather',
-                    icon: 'icon-alert',
-                    color: 'danger'
-                  })
-                }
-              })
+            this.newBrand(brand)
           }
 
-          this.$emit('closeSidebar')
-          this.initValues()
+
         }
       })
     },
-    updateCurrImg (input) {
-      if (input.target.files && input.target.files[0]) {
-        const reader = new FileReader()
-        reader.onload = e => {
-          this.image = input.target.files[0]
-          this.data.image.url = e.target.result
+    editBrand(data){
+      axios({
+          method: "put",
+          url: '/brands/'+this.data.id,
+          data: data,
+          config: { headers: {"Content-type": "multipart/form-data" }}
+        })
+        .then(res => {
+          if (res.data.res) {
+            this.$vs.notify({
+              title: 'Aprobado!',
+              text: 'Datos actualizados exitosamente!',
+              iconPack: 'feather',
+              icon: 'icon-check',
+              color: 'success'
+            })
+            this.$emit('successUpdate')
+            this.$emit('closeSidebar')
+            this.initValues()
+          } else {
+            this.$vs.notify({
+              title: 'Ha ocurrido un error',
+              text: res.data.error,
+              iconPack: 'feather',
+              icon: 'icon-alert',
+              color: 'danger'
+            })
+          }
+        })
+    },
+    newBrand(data){
+      axios({
+        method: "post",
+        url: '/brands/',
+        data: data,
+        config: { headers: {"Content-type": "multipart/form-data" }}
+      })
+      .then(res => {
+        if (res.data.res) {
+          this.$vs.notify({
+            title: 'Aprobado',
+            text: 'Marca creada exitosamente!',
+            iconPack: 'feather',
+            icon: 'icon-check',
+            color: 'success'
+          })
+          this.$emit('successUpdate')
+          this.$emit('closeSidebar')
+          this.initValues()
+        } else {
+          this.$vs.notify({
+            title: 'Ha ocurrido un error',
+            text: res.data.error,
+            iconPack: 'feather',
+            icon: 'icon-alert',
+            color: 'danger'
+          })
         }
-        reader.readAsDataURL(input.target.files[0])
+      })
+    },
+    getImage (e) {
+        let file = e.target.files[0]
+        this.image = file
+        this.uploadImage(file)
+    },
+    uploadImage(file){
+      let reader = new FileReader()
+
+      reader.onload = (e) => {
+        this.img_min = e.target.result
       }
+
+      reader.readAsDataURL(file)
+
     }
   }
 }

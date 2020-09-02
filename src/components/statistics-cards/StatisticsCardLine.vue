@@ -16,7 +16,7 @@
           </small>
           <vs-dropdown-menu class="w-52">
               <vs-dropdown-item @click="edit">Edit</vs-dropdown-item>
-              <vs-dropdown-item @click="setDefault">Select Default</vs-dropdown-item>
+              <vs-dropdown-item v-if="isSetDefault" @click="setDefault">Select Default</vs-dropdown-item>
               <vs-dropdown-item @click="deleted">Delete</vs-dropdown-item>
           </vs-dropdown-menu>
         </vs-dropdown>
@@ -53,6 +53,7 @@ export default{
             type: String,
             required: true
         },
+        isSetDefault: '',
         statistic: {
             type: [Number, String],
             required: true,
