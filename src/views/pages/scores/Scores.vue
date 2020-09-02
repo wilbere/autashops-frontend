@@ -10,6 +10,8 @@
 <template>
   <div id="data-list-thumb-view" class="data-list-container">
 
+    <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getScores" />
+
     <sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" @successUpdate="getScores" />
 
     <vs-table v-if="scores.length > 0" ref="table" multiple v-model="selected" pagination max-items="6" search :data="scores">
@@ -22,7 +24,7 @@
           <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
 
             <div class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32">
-              <span class="mr-2">Actions</span>
+              <span class="mr-2">Opciones</span>
               <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
             </div>
 
@@ -55,7 +57,7 @@
           <!-- ADD NEW -->
           <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newScore">
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <span class="ml-2 text-base text-primary">Add New</span>
+              <span class="ml-2 text-base text-primary">Cuenta</span>
           </div>
         </div>
 
@@ -65,12 +67,12 @@
 
       <template  slot="thead">
         <!-- <vs-th>Image</vs-th> -->
-        <vs-th sort-key="account_no">Accoount Nro.</vs-th>
-        <vs-th sort-key="name">Name</vs-th>
-        <vs-th sort-key="balance">Balance</vs-th>
-        <vs-th sort-key="default">Default</vs-th>
-        <vs-th sort-key="note">Note</vs-th>
-        <vs-th>Action</vs-th>
+        <vs-th sort-key="account_no">Nro. de Cuenta</vs-th>
+        <vs-th sort-key="name">Nombre</vs-th>
+        <vs-th sort-key="balance">Saldo</vs-th>
+        <vs-th sort-key="default">Por defecto</vs-th>
+        <vs-th sort-key="note">Nota</vs-th>
+        <vs-th>Acción</vs-th>
       </template>
 
       <template slot-scope="{data}" >
@@ -99,7 +101,7 @@
                 <vx-tooltip text="set default" position="bottom">
                   <vs-avatar v-if="tr.default == false" icon-pack="feather" icon="icon-edit" @click="setDefault(tr)" />
                 </vx-tooltip>
-                <span>default</span>
+                <span>por defecto</span>
               </vs-chip>
             </vs-td>
 
@@ -109,7 +111,7 @@
 
             <vs-td class="whitespace-no-wrap">
               <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editScore(tr)" />
-              <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
+              <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteScore(tr.id)" />
             </vs-td>
 
           </vs-tr>
@@ -118,7 +120,7 @@
     </vs-table>
     <div v-else>
       <vs-alert active="true">
-        No hay registros. Crea un nuevo registro haciendo click <a @click="newScore">aqui</a>
+        No hay registros. Crea un nuevo registro haciendo click <a color="info" @click="newScore">aqui</a>
       </vs-alert>
     </div>
   </div>
@@ -127,10 +129,12 @@
 <script>
 import axios from '@/axios.js'
 import Sidebar from './Sidebar.vue'
+import ConfirmDelete from './ConfirmDelete.vue'
 
 export default {
   components: {
-    Sidebar
+    Sidebar,
+    ConfirmDelete
   },
   data () {
     return {
@@ -138,7 +142,9 @@ export default {
       scores: [],
       isMounted: false,
       addNewDataSidebar: false,
-      sidebarData: {}
+      sidebarData: {},
+      deleteData: '',
+      activeConfirm: false,
     }
   },
   created(){
@@ -163,6 +169,13 @@ export default {
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
       this.sidebarData = data
       this.toggleDataSidebar(true)
+    },
+    toggleDeleteModal (val = false) {
+      this.activeConfirm = val
+    },
+    deleteScore(id){
+      this.deleteData = id
+      this.toggleDeleteModal(true)
     },
     setDefault(score) {
       let data = {
