@@ -2,9 +2,9 @@
   <div class="centerx">
     <vs-popup  classContent="popup-example"  title="Confirmación" :active.sync="isModalActiveLocal">
       <h4 >
-        ¿Estás seguro que quieres eliminar esta marca?
+        ¿Estás seguro que quieres eliminar este cliente?
       </h4>
-      <vs-button   class="mr-6 mt-5 float-right" color="danger" @click="deleteBrand(id)" >Borrar</vs-button>
+      <vs-button   class="mr-6 mt-5 float-right" color="danger" @click="deleteClient(id)" >Borrar</vs-button>
       <vs-button   class="mr-6 mt-5 float-right" type="flat" color="danger" @click="closeModal" >Cancelar</vs-button>
 
     </vs-popup>
@@ -42,9 +42,9 @@ export default {
     // this.getUsers()
   },
   methods: {
-    deleteBrand(id) {
+    deleteClient(id) {
       // console.log(id)
-      axios.delete('/brands/'+id)
+      axios.delete('/clients/'+id)
         .then(() => {
           this.$vs.notify({
             title: 'Aprobado!',

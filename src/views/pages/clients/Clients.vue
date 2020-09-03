@@ -2,6 +2,8 @@
   <div>
     <modal :isModalActive="addNewDataModal" @closeModal="toggleDataModal" :client="modalData" @success="getClients" />
 
+    <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getClients" />
+
     <vs-table :data="clients">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
@@ -56,7 +58,7 @@
                   <!-- <warehouse-details :warehouse="tr"></warehouse-details> -->
 
                   <vs-button type="border" size="small"  icon-pack="feather" icon="icon-edit" color="success" class="mr-2" @click="editClient(tr)"></vs-button>
-                  <vs-button type="border" size="small" icon-pack="feather" icon="icon-trash" color="danger" ></vs-button>
+                  <vs-button type="border" size="small" icon-pack="feather" icon="icon-trash" color="danger" @click="deleteClient(tr.id)"></vs-button>
                 </div>
               </div>
               <vs-list v-if="tr.company != null">
@@ -80,16 +82,20 @@
 <script>
 import Modal from './Modal.vue'
 import axios from '@/axios.js'
+import ConfirmDelete from './ConfirmDelete.vue'
 
 export default {
   components : {
-    Modal
+    Modal,
+    ConfirmDelete
   },
   data() {
     return {
       clients: [],
       modalData: {},
-      addNewDataModal: false
+      addNewDataModal: false,
+      deleteData: '',
+      activeConfirm: false,
     }
   },
   created () {
@@ -100,7 +106,6 @@ export default {
       axios.get('/clients')
         .then(res => {
           this.clients = res.data.clients
-          console.log(this.clients)
         })
 
     },
@@ -114,6 +119,13 @@ export default {
     },
     toggleDataModal (val = false) {
       this.addNewDataModal = val
+    },
+    toggleDeleteModal (val = false) {
+      this.activeConfirm = val
+    },
+    deleteClient(id){
+      this.deleteData = id
+      this.toggleDeleteModal(true)
     },
   }
 }
