@@ -144,11 +144,9 @@ export default {
           brand.append('name', this.data.name)
           brand.append('id', this.data.id)
           brand.append('data', new Blob([JSON.stringify(this.image)], { type: 'application/json'}))
-          console.log('submitData formdata', this.image)
-          brand.append('image', this.image)
+            brand.append('image', this.image)
           brand.append('image_id', this.data.image ? this.data.image.id : '')
 
-          console.log('submitData()', brand)
 
           if (this.data.id !== null && this.data.id >= 0) {
             this.editBrand(brand);
@@ -161,12 +159,8 @@ export default {
       })
     },
     editBrand(data){
-      axios({
-          method: "put",
-          url: '/brands/'+this.data.id,
-          data: data,
-          config: { headers: {"Content-type": "multipart/form-data" }}
-        })
+
+      axios.post('/brands/'+this.data.id+'?_method=PUT', data)
         .then(res => {
           if (res.data.res) {
             this.$vs.notify({
