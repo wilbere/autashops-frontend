@@ -46,7 +46,7 @@
               :isSetDefault="true"
               :statistic="currency.value"
               :statisticTitle="currency.name +' ('+currency.symbol+')'"
-              :color="currency.default ? 'primary' : 'secondary'" >
+              :color="currency.default == 1 ? 'primary' : 'secondary'" >
 
             </statistics-card-line>
         </div>

@@ -108,9 +108,9 @@ export default {
     // this.getUsers()
   },
   watch: {
-    isSidebarActive (val) {
+    isModalActive (val) {
       if (!val) return
-      if (Object.entries(this.data).length === 0) {
+      if (Object.entries(this.currency).length === 0) {
         this.$validator.reset()
       } else {
         this.id = this.currency.id

@@ -19,14 +19,19 @@
       </div>
 
       <template slot="thead">
-        <vs-th>Name</vs-th>
-        <vs-th>Barcode</vs-th>
-        <vs-th>Description</vs-th>
-        <vs-th>Price</vs-th>
+        <vs-th>ID</vs-th>
+        <vs-th>Nombre</vs-th>
+        <vs-th>Codigo de barra</vs-th>
+        <vs-th>Descripcóon</vs-th>
+        <vs-th>Precio</vs-th>
       </template>
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+          <vs-td :data="tr.id">
+            {{ tr.id }}
+          </vs-td>
+
           <vs-td :data="tr.name">
             {{ tr.name }}
           </vs-td>
