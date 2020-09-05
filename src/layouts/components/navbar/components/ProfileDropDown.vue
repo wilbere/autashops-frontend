@@ -3,7 +3,7 @@
 
     <div class="text-right leading-tight hidden sm:block">
       <p class="font-semibold">{{ currentUser.name }}</p>
-      <small>Available</small>
+      <small>{{ currentUser.username }}</small>
     </div>
 
     <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
@@ -17,7 +17,7 @@
 
           <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"  @click="$router.push('/admin/profile').catch(() => {})">
             <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Profile</span>
+            <span class="ml-2">Mi perfil</span>
           </li>
 
           <!-- <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
@@ -46,7 +46,7 @@
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="logout">
             <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Logout</span>
+            <span class="ml-2">Cerrar sesión</span>
           </li>
         </ul>
       </vs-dropdown-menu>

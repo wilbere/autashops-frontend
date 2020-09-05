@@ -4,7 +4,7 @@
 
     <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getClients" />
 
-    <vs-table :data="clients">
+    <vs-table :data="clients" search>
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 

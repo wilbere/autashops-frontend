@@ -146,6 +146,20 @@ const router = new Router({
                 }
               },
               {
+                path: '/admin/products/create',
+                name: 'New Products',
+                component: () => import('./views/pages/products/CreateProduct.vue'),
+                meta: {
+                  rule: 'admin',
+                  breadcrumb: [
+                    { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Productos', url: '/admin/products'},
+                    { title: 'Nuevo', active: true}
+                  ],
+                  pageTitle: 'Nuevo Producto'
+                }
+              },
+              {
                 path: '/admin/clients/',
                 name: 'Clients',
                 component: () => import('./views/pages/clients/Clients.vue'),

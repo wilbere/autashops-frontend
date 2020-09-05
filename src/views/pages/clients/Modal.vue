@@ -40,6 +40,9 @@
                 <vs-input  label="Rif"  v-model="client.rif" class="w-full" name="rif" v-validate="'required'" />
                 <span class="text-danger"></span>
               </div>
+              <div class="vx-col  w-full mt-5">
+                <vs-checkbox v-model="is_supplier">Este cliente también es nuestro proveedor</vs-checkbox>
+              </div>
             </div>
           </form>
         </tab-content>
@@ -162,6 +165,7 @@ export default {
       country: '',
       address_company: '',
       id_nuevo: '',
+      is_supplier: false
     }
   },
   watch: {
@@ -341,6 +345,7 @@ export default {
             client.append('phone', this.client.phone)
             client.append('rif', this.client.rif)
             client.append('email', this.client.email)
+            client.append('is_supplier', this.is_supplier ? 1 : 0)
 
             //   name: this.name,
             //   phone: this.phone,

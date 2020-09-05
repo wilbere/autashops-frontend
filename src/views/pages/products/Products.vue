@@ -1,18 +1,15 @@
 <template lang="html">
   <div>
 
-    <modal :isModalActive="addNewDataModal" @closeModal="toggleDataModal" :product="modalData" @success="getProducts" />
-
-
     <vs-table :data="products">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
         <div class="flex flex-wrap-reverse items-center">
           <!-- ADD NEW -->
-          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newProduct">
+          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="$router.push('/admin/products/create').catch(() => {})">
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <span class="ml-2 text-base text-primary">Add New</span>
+              <span class="ml-2 text-base text-primary" >Add New</span>
           </div>
         </div>
 
@@ -89,12 +86,12 @@
 <script>
 import axios from '@/axios.js'
 import ProductDetails from './ProductDetails.vue'
-import Modal from './Modal.vue'
+// import Modal from './Modal.vue'
 
 export default {
   components : {
     ProductDetails,
-    Modal
+    // Modal
   },
   data() {
     return {
@@ -117,10 +114,6 @@ export default {
     },
     editProduct(product){
       this.modalData = product
-      this.toggleDataModal(true)
-    },
-    newProduct(){
-      this.modalData = {}
       this.toggleDataModal(true)
     },
     toggleDataModal (val = false) {
