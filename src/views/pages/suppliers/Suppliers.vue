@@ -4,7 +4,7 @@
 
     <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getSuppliers" />
 
-    <vs-table :data="suppliers" search>
+    <vs-table v-if="suppliers.lenght > 0" :data="suppliers" search>
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -76,6 +76,10 @@
         </vs-tr>
       </template>
     </vs-table>
+
+    <vs-alert v-else :active="true" color="danger" icon-pack="feather" icon="icon-alert-triangle">
+      <span>No hay proveedores registrados. Registra uno nuevo <a @click="newSupplier"><b>aqui</b></a> para continuar.</span>
+    </vs-alert>
   </div>
 </template>
 

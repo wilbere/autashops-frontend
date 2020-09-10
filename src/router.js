@@ -10,6 +10,7 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
+import * as Cookie from 'js-cookie'
 
 Vue.use(Router)
 
@@ -28,6 +29,9 @@ const router = new Router({
             path: '/admin/',
             component: () => import('./layouts/main/Main.vue'),
             redirect : '/admin/dashboard',
+            meta: {
+              requiresAuth: true,
+            },
             children: [
         // =============================================================================
         // Theme Routes
@@ -37,7 +41,7 @@ const router = new Router({
                 name: 'home',
                 component: () => import('./views/Home.vue'),
                 meta: {
-                  rule: 'admin'
+                  rule: 'admin',
                 }
               },
               {
@@ -219,6 +223,7 @@ const router = new Router({
         {
             path: '/admin/',
             component: () => import('@/layouts/full-page/FullPage.vue'),
+
             children: [
         // =============================================================================
         // PAGES
@@ -263,6 +268,18 @@ router.afterEach(() => {
     if (appLoading) {
         appLoading.style.display = "none";
     }
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (Cookie.get('isLogin')) {
+      next();
+    } else {
+      next({ name: "page-login" });
+    }
+  } else {
+    next();
+  }
 })
 
 export default router

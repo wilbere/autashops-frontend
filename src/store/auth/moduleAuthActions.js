@@ -163,7 +163,7 @@ export default {
 
     // location.href('/admin/login')
     router.push('/admin/login').catch(() => {})
-    location.reload()
+    // location.reload()
 
   }
 }

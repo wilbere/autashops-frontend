@@ -8,6 +8,7 @@
       max-items="10"
       pagination
       search
+      v-if="warehouses.length > 0"
       :data="warehouses">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
@@ -74,6 +75,9 @@
         </vs-tr>
       </template>
     </vs-table>
+    <vs-alert v-else :active="true" color="danger" icon-pack="feather" icon="icon-alert-triangle">
+      <span>No hay almacenes registrados. Registra uno nuevo <a @click="newWarehouse"><b>aqui</b></a> para continuar.</span>
+    </vs-alert>
   </div>
 </template>
 <script>

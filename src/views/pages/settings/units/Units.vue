@@ -18,7 +18,7 @@
 
     <sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" @success="getUnits" />
 
-    <vs-table ref="table" v-model="selected" pagination max-items="8" search :data="units">
+    <vs-table v-if="units.length > 0" ref="table" v-model="selected" pagination max-items="8" search :data="units">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -100,6 +100,10 @@
         </tbody>
       </template>
     </vs-table>
+
+    <vs-alert v-else :active="true" color="danger" icon-pack="feather" icon="icon-alert-triangle">
+      <span>No hay unidades registradas. Registra una nueva <a @click="newUnit"><b>aqui</b></a> para continuar.</span>
+    </vs-alert>
   </div>
 </template>
 

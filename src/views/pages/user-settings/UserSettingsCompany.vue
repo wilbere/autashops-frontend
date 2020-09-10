@@ -6,7 +6,7 @@
       data-vv-validate-on="blur"
       data-vv-name="name"
       class="w-full mb-2 "
-      label-placeholder="Name"
+      label-placeholder="Nombre"
       v-model="name" />
     <span class="text-danger w-full mb-3 text-sm">{{ errors.first('name') }}</span>
 
@@ -15,7 +15,7 @@
       data-vv-validate-on="blur"
       data-vv-name="phone"
       class="w-full mb-2 mt-6"
-      label-placeholder="Phone"
+      label-placeholder="Telefono"
       v-model="phone" />
     <span class="text-danger w-full mb-3 text-sm">{{ errors.first('phone') }}</span>
 
@@ -42,7 +42,7 @@
       data-vv-validate-on="blur"
       data-vv-name="country"
       class="w-full mb-2 mt-6"
-      label-placeholder="Country"
+      label-placeholder="País"
       v-model="country" />
     <span class="text-danger w-full mb-3 text-sm">{{ errors.first('country') }}</span>
 
@@ -51,7 +51,7 @@
       data-vv-validate-on="blur"
       data-vv-name="city"
       class="w-full mb-2 mt-6"
-      label-placeholder="City"
+      label-placeholder="Ciudad"
       v-model="city" />
     <span class="text-danger w-full mb-3 text-sm">{{ errors.first('city') }}</span>
 
@@ -60,14 +60,14 @@
       data-vv-validate-on="blur"
       data-vv-name="address"
       class="w-full mb-2 mt-6"
-      label-placeholder="Address"
+      label-placeholder="Dirección"
       v-model="address" />
     <span class="text-danger w-full mb-3 text-sm">{{ errors.first('address') }}</span>
 
 
     <!-- Save & Reset Button -->
     <div class="flex flex-wrap items-center justify-end">
-      <vs-button class="ml-auto mt-2" :disabled="!validateForm" @click="submitData">Save Changes</vs-button>
+      <vs-button class="ml-auto mt-2" :disabled="!validateForm" @click="submitData">Guardar</vs-button>
       <!-- <vs-button class="ml-4 mt-2" type="border" color="warning">Reset</vs-button> -->
     </div>
   </vx-card>

@@ -63,6 +63,12 @@ export default {
 
     }
   },
+
+  watch: {
+    currentUser() {
+      return this.$store.state.auth.currentUser
+    }
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.currentUser
