@@ -79,6 +79,9 @@ Vue.use(VueHammer)
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
 
+//VueTheMask
+import VueTheMask from 'vue-the-mask'
+Vue.use(VueTheMask)
 
 // Feather font icon
 require('./assets/css/iconfont.css')
