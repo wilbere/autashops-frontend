@@ -4,7 +4,7 @@
 
     <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getClients" />
 
-    <vs-table :data="clients" search>
+    <vs-table v-if="clients.length > 0" :data="clients" search>
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -19,6 +19,7 @@
       </div>
 
       <template slot="thead">
+
         <vs-th>ID</vs-th>
         <vs-th>Cliente</vs-th>
         <vs-th>RIF ó C.I.</vs-th>
@@ -87,6 +88,9 @@
         </vs-tr>
       </template>
     </vs-table>
+    <vs-alert v-else :active="true" color="danger" icon-pack="feather" icon="icon-alert-triangle">
+      <span>No hay clientes registrados. Registra uno nuevo <a @click="newClient"><b>aqui</b></a> para continuar.</span>
+    </vs-alert>
   </div>
 </template>
 

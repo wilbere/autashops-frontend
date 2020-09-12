@@ -7,7 +7,7 @@
       data-vv-name="old_password"
       class="w-full mb-2"
       type="password"
-      label-placeholder="Old Password"
+      label-placeholder="Contraseña antigua"
       v-model="old_password" />
     <span class="text-danger w-full mb-3 text-sm">{{ errors.first('old_password') }}</span>
 
@@ -17,7 +17,7 @@
       data-vv-name="password"
       class="w-full mb-2  mt-6"
       type="password"
-      label-placeholder="New Password"
+      label-placeholder="Nueva contraseña"
       v-model="password" />
     <span class="text-danger w-full mb-3 text-sm">{{ errors.first('password') }}</span>
 
@@ -27,14 +27,14 @@
       data-vv-name="confirm_password"
       class="w-full mb-2  mt-6"
       type="password"
-      label-placeholder="Confirm Password"
+      label-placeholder="Confirma tu contraseña por favor"
       v-model="confirm_password" />
     <span class="text-danger w-full mb-3 text-sm">{{ errors.first('confirm_password') }}</span>
 
 
     <!-- Save & Reset Button -->
     <div class="flex flex-wrap items-center justify-end">
-      <vs-button class="ml-auto mt-2" :disabled="!validateForm" @click="changePassword">Save Changes</vs-button>
+      <vs-button class="ml-auto mt-2" :disabled="!validateForm" @click="changePassword">Guardar</vs-button>
       <!-- <vs-button class="ml-4 mt-2" type="border" color="warning">Reset</vs-button> -->
     </div>
   </vx-card>

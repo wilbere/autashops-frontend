@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
 
-    <vs-table :data="products">
+    <vs-table v-if="products.length > 0" :data="products">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -25,8 +25,8 @@
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-          <vs-td :data="tr.id">
-            {{ tr.id }}
+          <vs-td :data="tr.code">
+            {{ tr.code }}
           </vs-td>
 
           <vs-td :data="tr.name">
@@ -80,6 +80,9 @@
         </vs-tr>
       </template>
     </vs-table>
+    <vs-alert v-else :active="true" color="danger" icon-pack="feather" icon="icon-alert-triangle">
+      <span>No hay productos registrados. Registra uno nuevo <a @click="$router.push('/admin/products/create').catch(() => {})"><b>aqui</b></a> para continuar.</span>
+    </vs-alert>
   </div>
 </template>
 

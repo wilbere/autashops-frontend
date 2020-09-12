@@ -24,8 +24,8 @@
               <div class="p-8 login-tabs-container">
 
                 <div class="vx-card__title mb-4">
-                  <h4 class="mb-4">Login</h4>
-                  <p>Welcome back, please login to your account.</p>
+                  <h4 class="mb-4">Inicio de sesión</h4>
+                  <p>Bienvenido de vuelta, por favor inicia sesión en tu cuenta.</p>
                 </div>
 
                 <div>
@@ -44,16 +44,16 @@
                       icon-no-border
                       icon="icon icon-lock"
                       icon-pack="feather"
-                      label-placeholder="Password"
+                      label-placeholder="Contraseña"
                       v-model="password"
                       class="w-full mt-6" />
 
                   <div class="flex flex-wrap justify-between my-5">
-                      <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
-                      <router-link to="">Forgot Password?</router-link>
+                      <!-- <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox> -->
+                      <router-link to="">¿Olvidaste la contraseña?</router-link>
                   </div>
-                  <vs-button  type="border" to="/admin/register">Register</vs-button>
-                  <vs-button class="float-right" @click="login" :disabled="!validateForm">Login</vs-button>
+                  <vs-button  type="border" to="/admin/register">Registrate</vs-button>
+                  <vs-button class="float-right" @click="login" :disabled="!validateForm">Iniciar sesión</vs-button>
 
                 </div>
 
@@ -67,6 +67,8 @@
 </template>
 
 <script>
+import * as Cookie from 'js-cookie'
+
 export default{
   data() {
     return {
@@ -86,7 +88,7 @@ export default{
   methods: {
     checkLogin () {
       // If user is already logged in notify
-      if (this.$store.state.auth.isLogin) {
+      if (Cookie.get('isLogin')) {
 
         // Close animation if passed as payload
         // this.$vs.loading.close()

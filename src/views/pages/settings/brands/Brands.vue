@@ -14,7 +14,7 @@
 
     <sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" @successUpdate="getBrands" />
 
-    <vs-table ref="table" v-model="selected" pagination max-items="6" search :data="brands">
+    <vs-table v-if="brands.length > 0" ref="table" v-model="selected" pagination max-items="6" search :data="brands">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -95,6 +95,9 @@
         </tbody>
       </template>
     </vs-table>
+    <vs-alert v-else :active="true" color="danger" icon-pack="feather" icon="icon-alert-triangle">
+      <span>No hay marcas registradas. Registra una nueva <a @click="newBrand"><b>aqui</b></a> para continuar.</span>
+    </vs-alert>
   </div>
 </template>
 
@@ -126,7 +129,7 @@ export default {
     getBrands() {
       axios.get('/brands')
         .then(res => {
-          console.log(res)
+          console.log(this.brands)
           this.brands = res.data.brands
         })
     },

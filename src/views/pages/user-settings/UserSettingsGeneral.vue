@@ -1,13 +1,15 @@
 <template>
   <vx-card no-shadow>
 
+    <form enctype="multipart/form-data">
+
     <!-- Img Row -->
     <div class="flex flex-wrap items-center mb-base">
-      <vs-avatar :src="user.image.url" size="70px" class="mr-4 mb-4" />
+      <vs-avatar :src="thumbnail ? thumbnail : user.image.url" size="70px" class="mr-4 mb-4" />
       <div>
-        <vs-button class="mr-4 sm:mb-0 mb-2">Upload photo</vs-button>
-        <vs-button type="border" color="danger">Remove</vs-button>
-        <p class="text-sm mt-2">Allowed JPG, GIF or PNG. Max size of 800kB</p>
+        <input type="file" class="hidden" name="image" ref="updateImgInput" @change="getImage" accept="image/*">
+        <vs-button class="mr-4 sm:mb-0 mb-2" @click="$refs.updateImgInput.click()">Subir Foto</vs-button>
+        <vs-button type="border" color="danger">Remover</vs-button>
       </div>
     </div>
 
@@ -17,7 +19,7 @@
       data-vv-validate-on="blur"
       data-vv-name="username"
       class="w-full mb-2 "
-      label-placeholder="Username"
+      label-placeholder="Nombre de usuario"
       v-model="username">
     </vs-input>
     <span class="text-danger w-full mb-3 text-sm">{{ errors.first('username') }}</span>
@@ -27,7 +29,7 @@
       data-vv-validate-on="blur"
       data-vv-name="name"
       class="w-full mb-2  mt-6"
-      label-placeholder="Name"
+      label-placeholder="Nombre(s) y Apellido(s)"
       v-model="name">
     </vs-input>
     <span class="text-danger w-full mb-3 text-sm">{{ errors.first('name') }}</span>
@@ -48,9 +50,11 @@
 
     <!-- Save & Reset Button -->
     <div class="flex flex-wrap items-center justify-end">
-      <vs-button class="ml-auto mt-2" :disabled="!validateForm" @click="submitData">Save Changes</vs-button>
+      <vs-button class="ml-auto mt-2" :disabled="!validateForm" @click="submitData">Guardar</vs-button>
       <!-- <vs-button class="ml-4 mt-2" type="border" color="warning">Reset</vs-button> -->
     </div>
+    </form>
+
   </vx-card>
 </template>
 
@@ -63,9 +67,19 @@ export default {
       username : '',
       email : '',
       name: '',
+      img_min: '',
+      image: null
     }
   },
+  watch: {
+    thumbnail() {
+      return this.img_min
+    },
+  },
   computed: {
+    thumbnail() {
+      return this.img_min
+    },
     user() {
       return this.$store.state.auth.currentUser
     },
@@ -82,21 +96,39 @@ export default {
     }
   },
   methods: {
-    submitData () {
+    getImage (e) {
+        let file = e.target.files[0]
+        this.image = file
+        this.uploadImage(file)
+    },
+    uploadImage(file){
+      let reader = new FileReader()
 
-      const user = {
-        username : this.username,
-        name : this.name,
-        email : this.email,
+      reader.onload = (e) => {
+        this.img_min = e.target.result
       }
 
-      axios.put('/users/'+this.user.id, user)
+      reader.readAsDataURL(file)
+
+    },
+    submitData () {
+
+      let data = new FormData()
+
+      data.append('username', this.username)
+      data.append('name', this.name)
+      data.append('email', this.email)
+      data.append('image', this.image)
+      data.append('image_id', this.user.image.id)
+       
+
+      axios.post('/users/'+this.user.id+'?_method=PUT', data)
         .then(res => {
           if (res.data.res == true) {
 
             this.$vs.notify({
-              title: 'Updated Success',
-              text: 'You are successfully created!',
+              title: 'Aprobado',
+              text: 'Datos actualizados exitosamente!',
               iconPack: 'feather',
               icon: 'icon-check',
               color: 'success'

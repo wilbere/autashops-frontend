@@ -15,7 +15,7 @@
 
     <sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" @success="getCategories" />
 
-    <vs-table ref="table" v-model="selected" pagination max-items="8" search :data="categories">
+    <vs-table v-if="categories.length > 0" ref="table" v-model="selected" pagination max-items="8" search :data="categories">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -99,6 +99,9 @@
         </tbody>
       </template>
     </vs-table>
+    <vs-alert v-else :active="true" color="danger" icon-pack="feather" icon="icon-alert-triangle">
+      <span>No hay categorias registradas. Registra una nueva <a @click="newCategory"><b>aqui</b></a> para continuar.</span>
+    </vs-alert>
   </div>
 </template>
 

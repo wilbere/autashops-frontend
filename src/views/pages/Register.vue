@@ -24,17 +24,17 @@
               <div class="p-8 login-tabs-container">
 
                 <div class="vx-card__title mb-4">
-                  <h4 class="mb-4">Register</h4>
-                  <p>Welcome back, please login to your account.</p>
+                  <h4 class="mb-4">Registrate</h4>
+                  <p>Rellena los campos y regístrate.</p>
                 </div>
 
                 <div>
                   <vs-input
                     v-validate="'required|alpha_spaces|min:3'"
                     data-vv-validate-on="blur"
-                    label-placeholder="Name"
+                    label-placeholder="Nombre"
                     name="name"
-                    placeholder="Name"
+                    placeholder="Nombre"
                     v-model="name"
                     class="w-full" />
                   <span class="text-danger text-sm">{{ errors.first('name') }}</span>
@@ -42,9 +42,9 @@
                   <vs-input
                     v-validate="'required|alpha_dash|min:3'"
                     data-vv-validate-on="blur"
-                    label-placeholder="Username"
+                    label-placeholder="Usuario"
                     name="username"
-                    placeholder="Username"
+                    placeholder="Usuario"
                     v-model="username"
                     class="w-full" />
                   <span class="text-danger text-sm">{{ errors.first('username') }}</span>
@@ -66,8 +66,8 @@
                     data-vv-validate-on="blur"
                     v-validate="'required|min:6|max:10'"
                     name="password"
-                    label-placeholder="Password"
-                    placeholder="Password"
+                    label-placeholder="Contraseña"
+                    placeholder="Contraseña"
                     v-model="password"
                     class="w-full mt-6" />
                   <span class="text-danger text-sm">{{ errors.first('password') }}</span>
@@ -78,15 +78,15 @@
                     data-vv-validate-on="blur"
                     data-vv-as="password"
                     name="confirm_password"
-                    label-placeholder="Confirm Password"
-                    placeholder="Confirm Password"
+                    label-placeholder="Confirma la contraseña"
+                    placeholder="Confirma la contraseña"
                     v-model="confirm_password"
                     class="w-full mt-6" />
                   <span class="text-danger text-sm">{{ errors.first('confirm_password') }}</span>
 
-                  <vs-checkbox v-model="isTermsConditionAccepted" class="mt-6">I accept the terms & conditions.</vs-checkbox>
-                  <vs-button  type="border" to="/admin/login" class="mt-6">Login</vs-button>
-                  <vs-button class="float-right mt-6" @click="registerUser" :disabled="!validateForm">Register</vs-button>
+                  <!-- <vs-checkbox v-model="isTermsConditionAccepted" class="mt-6">I accept the terms & conditions.</vs-checkbox> -->
+                  <vs-button  type="border" to="/admin/login" class="mt-6">Iniciar sesión</vs-button>
+                  <vs-button class="float-right mt-6" @click="registerUser" :disabled="!validateForm">Registrate</vs-button>
 
                 </div>
 
@@ -102,7 +102,7 @@
 <script>
 
 import {mapGetters} from "vuex";
-import route from '../../router.js'
+// import router from '../../router.js'
 
 export default{
   data () {

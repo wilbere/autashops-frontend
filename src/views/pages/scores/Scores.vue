@@ -118,11 +118,9 @@
         </tbody>
       </template>
     </vs-table>
-    <div v-else>
-      <vs-alert active="true">
-        No hay registros. Crea un nuevo registro haciendo click <a color="info" @click="newScore">aqui</a>
-      </vs-alert>
-    </div>
+    <vs-alert v-else :active="true" color="danger" icon-pack="feather" icon="icon-alert-triangle">
+      <span>No hay cuentas registradas. Registra una nueva <a @click="newScore"><b>aqui</b></a> para continuar.</span>
+    </vs-alert>
   </div>
 </template>
 
