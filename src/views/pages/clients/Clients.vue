@@ -1,6 +1,5 @@
 <template>
   <div>
-    <modal :isModalActive="addNewDataModal" @closeModal="toggleDataModal" :client="modalData" @success="getClients" />
 
     <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getClients" />
 
@@ -89,19 +88,17 @@
       </template>
     </vs-table>
     <vs-alert v-else :active="true" color="danger" icon-pack="feather" icon="icon-alert-triangle">
-      <span>No hay clientes registrados. Registra uno nuevo <a @click="newClient"><b>aqui</b></a> para continuar.</span>
+      <span>No hay clientes registrados. Registra uno nuevo <a @click="$router.push('/admin/clients/create').catch(() => {})"><b>aqui</b></a> para continuar.</span>
     </vs-alert>
   </div>
 </template>
 
 <script>
-import Modal from './Modal.vue'
 import axios from '@/axios.js'
 import ConfirmDelete from './ConfirmDelete.vue'
 
 export default {
   components : {
-    Modal,
     ConfirmDelete
   },
   data() {
@@ -124,20 +121,20 @@ export default {
         })
 
     },
-    editClient(client){
-      this.modalData = client
-      this.toggleDataModal(true)
-    },
-    newClient(){
-      this.modalData = {}
-      this.toggleDataModal(true)
-    },
-    toggleDataModal (val = false) {
-      this.addNewDataModal = val
-    },
-    toggleDeleteModal (val = false) {
-      this.activeConfirm = val
-    },
+    // editClient(client){
+    //   this.modalData = client
+    //   this.toggleDataModal(true)
+    // },
+    // newClient(){
+    //   this.modalData = {}
+    //   this.toggleDataModal(true)
+    // },
+    // toggleDataModal (val = false) {
+    //   this.addNewDataModal = val
+    // },
+    // toggleDeleteModal (val = false) {
+    //   this.activeConfirm = val
+    // },
     deleteClient(id){
       this.deleteData = id
       this.toggleDeleteModal(true)
