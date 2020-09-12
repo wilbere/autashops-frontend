@@ -15,13 +15,13 @@
           <span>COPYRIGHT &copy;</span>
           <span>{{ new Date().getFullYear() }} </span>
           <a href="http://autanashops.com/" target="_blank" rel="nofollow">AutanaShops</a>
-          <span class="hidden sm:inline-block">, All rights Reserved</span>
+          <span class="hidden sm:inline-block">, Todos los derechos reservados.</span>
         </p>
         <span class="md:flex hidden items-center">
-            <span>Hand-crafted & Made with</span>
+            <span>Hecho a mano & con</span>
             <feather-icon icon="HeartIcon" svgClasses="stroke-current text-danger w-6 h-6" class="ml-2 mr-2" />
             <span>
-              by
+              por
               <a href="https://wilber.dev/" target="_blank" rel="nofollow">Wilbere</a>
             </span>
         </span>

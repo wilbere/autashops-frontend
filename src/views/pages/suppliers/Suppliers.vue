@@ -2,7 +2,9 @@
   <div>
     <modal :isModalActive="addNewDataModal" @closeModal="toggleDataModal" :supplier="modalData" @success="getSuppliers" />
 
-    <vs-table :data="suppliers">
+    <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getSuppliers" />
+
+    <vs-table :data="suppliers" search>
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -56,7 +58,7 @@
                   <!-- <warehouse-details :warehouse="tr"></warehouse-details> -->
 
                   <vs-button type="border" size="small"  icon-pack="feather" icon="icon-edit" color="success" class="mr-2" @click="editSupplier(tr)"></vs-button>
-                  <vs-button type="border" size="small" icon-pack="feather" icon="icon-trash" color="danger" ></vs-button>
+                  <vs-button type="border" size="small" icon-pack="feather" icon="icon-trash" color="danger" @click="deleteSupplier(tr.id)"></vs-button>
                 </div>
               </div>
               <vs-list v-if="tr.company != null">
@@ -79,17 +81,21 @@
 
 <script>
 import Modal from './Modal.vue'
+import ConfirmDelete from './ConfirmDelete.vue'
 import axios from '@/axios.js'
 
 export default {
   components : {
-    Modal
+    Modal,
+    ConfirmDelete
   },
   data() {
     return {
       suppliers: [],
       modalData: {},
-      addNewDataModal: false
+      addNewDataModal: false,
+      deleteData: '',
+      activeConfirm: false,
     }
   },
   created () {
@@ -100,7 +106,6 @@ export default {
       axios.get('/suppliers')
         .then(res => {
           this.suppliers = res.data.suppliers
-          console.log(this.suppliers)
         })
 
     },
@@ -114,6 +119,13 @@ export default {
     },
     toggleDataModal (val = false) {
       this.addNewDataModal = val
+    },
+    toggleDeleteModal (val = false) {
+      this.activeConfirm = val
+    },
+    deleteSupplier(id){
+      this.deleteData = id
+      this.toggleDeleteModal(true)
     },
   }
 }

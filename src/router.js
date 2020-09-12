@@ -146,8 +146,22 @@ const router = new Router({
                 }
               },
               {
+                path: '/admin/products/create',
+                name: 'Nuevo Producto',
+                component: () => import('./views/pages/products/CreateProduct.vue'),
+                meta: {
+                  rule: 'admin',
+                  breadcrumb: [
+                    { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Productos', url: '/admin/products'},
+                    { title: 'Nuevo', active: true}
+                  ],
+                  pageTitle: 'Nuevo Producto'
+                }
+              },
+              {
                 path: '/admin/clients/',
-                name: 'Clients',
+                name: 'Clientes',
                 component: () => import('./views/pages/clients/Clients.vue'),
                 meta: {
                   rule: 'admin',
@@ -156,6 +170,20 @@ const router = new Router({
                     { title: 'Clientes', active: true}
                   ],
                   pageTitle: 'Clientes'
+                }
+              },
+              {
+                path: '/admin/clients/create',
+                name: 'Nuevo Cliente',
+                component: () => import('./views/pages/clients/CreateClient.vue'),
+                meta: {
+                  rule: 'admin',
+                  breadcrumb: [
+                    { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Clientes', url: '/admin/clients'},
+                    { title: 'Nuevo', active: true}
+                  ],
+                  pageTitle: 'Nuevo Cliente'
                 }
               },
               {
