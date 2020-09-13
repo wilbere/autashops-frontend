@@ -204,6 +204,20 @@ const router = new Router({
                 }
               },
               {
+                path: '/admin/suppliers/create',
+                name: 'Nuevo Proveedor',
+                component: () => import('./views/pages/suppliers/CreateSupplier.vue'),
+                meta: {
+                  rule: 'admin',
+                  breadcrumb: [
+                    { title: 'Home', url: '/admin/dashboard' },
+                    { title: 'Proveedores', url: '/admin/suppliers'},
+                    { title: 'Nuevo', active: true}
+                  ],
+                  pageTitle: 'Nuevo Proveedor'
+                }
+              },
+              {
                 path: '/admin/shipping/',
                 name: 'Shipping',
                 component: () => import('./views/pages/shipping/Shipping.vue'),

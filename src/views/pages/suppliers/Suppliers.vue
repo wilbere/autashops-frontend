@@ -1,8 +1,7 @@
 <template>
   <div>
-    <modal :isModalActive="addNewDataModal" @closeModal="toggleDataModal" :supplier="modalData" @success="getSuppliers" />
 
-    <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getSuppliers" />
+    <confirm-delete :isModalActive="activeConfirm" @closeModal="toggleDeleteModal" :id="deleteData" @success="getClients" />
 
     <vs-table v-if="suppliers.lenght > 0" :data="suppliers" search>
 
@@ -10,23 +9,29 @@
 
         <div class="flex flex-wrap-reverse items-center">
           <!-- ADD NEW -->
-          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="newSupplier">
+          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary" @click="$router.push('/admin/suppliers/create').catch(() => {})">
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <span class="ml-2 text-base text-primary">Proveedor</span>
+              <span class="ml-2 text-base text-primary">Cliente</span>
           </div>
         </div>
 
       </div>
 
       <template slot="thead">
-        <vs-th>Encargado</vs-th>
-        <vs-th>Empresa</vs-th>
+        <vs-th>ID</vs-th>
+        <vs-th>Proveedor</vs-th>
+        <vs-th>RIF</vs-th>
         <vs-th>Email</vs-th>
         <vs-th>Teléfono</vs-th>
       </template>
 
       <template slot-scope="{data}">
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+          <vs-td :data="tr.slug">
+            {{ tr.slug }}
+          </vs-td>
+
+
           <vs-td :data="tr.name" class="con-userx flex items-center justify-start">
             <vx-tooltip :text="tr.name" v-if="tr.image != null" position="bottom">
               <vx-tooltip :text="tr.name" position="bottom">
@@ -36,8 +41,9 @@
             <span v-else>{{ tr.name }}</span>
           </vs-td>
 
-          <vs-td :data="tr.company">
-            {{ tr.company ? tr.company.name_company : 'N/A' }}
+
+          <vs-td :data="tr.rif">
+            {{ tr.rif  }}
           </vs-td>
 
           <vs-td :data="tr.email">
@@ -47,7 +53,7 @@
             {{ tr.phone }}
           </vs-td>
 
-          <template class="expand-user"  slot="expand">
+          <!-- <template class="expand-user"  slot="expand">
             <div class="con-expand-users ">
               <div class="con-btns-user flex items-center justify-between">
                 <div class="con-userx flex items-center justify-start">
@@ -55,10 +61,10 @@
                   <span>{{ tr.name }}</span>
                 </div>
                 <div class="flex">
-                  <!-- <warehouse-details :warehouse="tr"></warehouse-details> -->
+                  <!- <warehouse-details :warehouse="tr"></warehouse-details> --
 
-                  <vs-button type="border" size="small"  icon-pack="feather" icon="icon-edit" color="success" class="mr-2" @click="editSupplier(tr)"></vs-button>
-                  <vs-button type="border" size="small" icon-pack="feather" icon="icon-trash" color="danger" @click="deleteSupplier(tr.id)"></vs-button>
+                  <vs-button type="border" size="small"  icon-pack="feather" icon="icon-edit" color="success" class="mr-2" @click="editClient(tr)"></vs-button>
+                  <vs-button type="border" size="small" icon-pack="feather" icon="icon-trash" color="danger" @click="deleteClient(tr.id)"></vs-button>
                 </div>
               </div>
               <vs-list v-if="tr.company != null">
@@ -72,7 +78,7 @@
 
               </vs-list>
             </div>
-          </template>
+          </template> -->
         </vs-tr>
       </template>
     </vs-table>
@@ -85,8 +91,8 @@
 
 <script>
 import Modal from './Modal.vue'
-import ConfirmDelete from './ConfirmDelete.vue'
 import axios from '@/axios.js'
+import ConfirmDelete from './ConfirmDelete.vue'
 
 export default {
   components : {
@@ -103,21 +109,21 @@ export default {
     }
   },
   created () {
-    this.getSuppliers()
+    this.getClients()
   },
   methods: {
-    getSuppliers(){
+    getClients(){
       axios.get('/suppliers')
         .then(res => {
           this.suppliers = res.data.suppliers
         })
 
     },
-    editSupplier(supplier){
-      this.modalData = supplier
+    editClient(client){
+      this.modalData = client
       this.toggleDataModal(true)
     },
-    newSupplier(){
+    newClient(){
       this.modalData = {}
       this.toggleDataModal(true)
     },
@@ -127,7 +133,7 @@ export default {
     toggleDeleteModal (val = false) {
       this.activeConfirm = val
     },
-    deleteSupplier(id){
+    deleteClient(id){
       this.deleteData = id
       this.toggleDeleteModal(true)
     },
